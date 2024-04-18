@@ -22,7 +22,7 @@
 
 🌍 `<About me/>`
 ```python
-class RedBoardDev:
+class lipoutou34:
     def __init__(self):
         self.name = "ulysse mercadal"
         self.alias = "lipoutou34"
@@ -39,6 +39,6 @@ class RedBoardDev:
         info += f"💡 My interests include: {' '.join(self.interests)}\n"
         return info
 
-redboarddev = RedBoardDev()
-print(redboarddev.get_info())
+lipoutou34 = lipoutou34()
+print(lipoutou34.get_info())
 ```
