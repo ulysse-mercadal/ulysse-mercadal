@@ -21,7 +21,7 @@ class lipoutou34:
     def __init__(self):
         self.name = "ulysse mercadal"
         self.alias = "lipoutou34"
-        self.age = 20
+        self.age = 19
         self.education = "Student at Epitech Paris"
         self.interests = ["bouldering", "alpinism"]
         self.languages = ["French", "English"]
