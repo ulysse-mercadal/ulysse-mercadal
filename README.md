@@ -22,9 +22,10 @@ class lipoutou34:
         self.name = "ulysse mercadal"
         self.alias = "lipoutou34"
         self.age = 19
-        self.education = "Student at Epitech Paris"
-        self.interests = ["bouldering", "alpinism"]
+        self.role = "student"
+        self.education = "Epitech Paris"
         self.languages = ["French", "English"]
+        self.interests = ["bouldering", "alpinism"]
 
     def get_info(self):
         info = f"👋 Hi, I'm {self.name} aka {self.alias}!\n"
