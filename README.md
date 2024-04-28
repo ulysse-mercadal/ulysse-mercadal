@@ -32,7 +32,7 @@ class lipoutou34:
         info += f"👨‍💻 I'm a {self.age}-year-old {self.role}.\n"
         info += f"🎓 Currently studying at {self.education}.\n"
         info += f"🌐 I can communicate in {self.languages[0]} and {self.languages[1]}.\n"
-        info += f"💡 My interests include: {' '.join(self.interests)}"
+        info += f"💡 My interests include: {' '.join(self.interests)}."
         return info
 
 lipoutou34 = lipoutou34()
