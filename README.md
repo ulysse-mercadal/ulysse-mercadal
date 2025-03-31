@@ -17,7 +17,12 @@
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
 
 </p>
+
 <br/>
+<p align='center'>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=6"" width="49%" />
+</p>
+
 <br/>
 
 🌍 `<About me/>`
