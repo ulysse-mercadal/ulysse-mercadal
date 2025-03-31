@@ -1,16 +1,21 @@
-# `<Hello World, I'm Ulysse Mercadal/>` <a href="https://discord.com/users/525004616501559296" target="_blank"><img align="center" alt="My Discord" width="70px" src="./img/discord.png" /></a> <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank"><img align="center" alt="my LinkedIn" width="70px" src="./img/linkedin.png" /></a>
+# `<Hello World, I'm Ulysse Mercadal/>` <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank"><img align="center" alt="my LinkedIn" width="70px" src="./img/linkedin.png" /></a>
 
 <p align="center">
   <br/>
   <br/>
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg">
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg">
+  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg">
   <br/>
+    <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg">
+    <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg">
+  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/zig/zig-original.svg">
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg">
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg">
   <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg">
+  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg">
+  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
+
 </p>
 <br/>
 <br/>
