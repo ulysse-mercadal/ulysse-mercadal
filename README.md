@@ -1,4 +1,4 @@
-# `<Hello World, I'm Ulysse Mercadal/>` <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank"><img align="center" alt="my LinkedIn" width="70px" src="./img/linkedin.png" /></a>
+# `<Hello World, I'm Ulysse Mercadal/>` <br/> <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank"><img align="center" alt="my LinkedIn" width="70px" src="./img/linkedin.png" /></a>
 
 <p align="center">
   <br/>
