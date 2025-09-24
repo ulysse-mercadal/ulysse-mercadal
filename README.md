@@ -33,7 +33,7 @@ class lipoutou34:
         self.alias = "lipoutou34"
         self.age = 19
         self.role = "student"
-        self.education = "Epitech Paris"
+        self.education = "Epitech Lyon"
         self.languages = ["French", "English"]
         self.interests = ["bouldering", "alpinism"]
 
