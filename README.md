@@ -36,7 +36,7 @@
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" alt="Flutter" />
 </p>
 
-<pre><code class="language-python">
+```python
 class UMercadal:
     def __init__(self):
         self.name = "Ulysse Mercadal"
@@ -56,8 +56,7 @@ class UMercadal:
 
 UMercadal = UMercadal()
 print(UMercadal.get_info())
-</code></pre>
-
+```
 ---
 <p align='center'>
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=6" alt="Top Languages" />
