@@ -1,50 +1,67 @@
-# `<Hello World, I'm Ulysse Mercadal/>` <br/> <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank"><img align="center" alt="my LinkedIn" width="70px" src="./img/linkedin.png" /></a>
+<p align="center">
+  <h1>Hello World, I'm Ulysse Mercadal</h1>
+</p>
 
 <p align="center">
-  <br/>
-  <br/>
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg">
-  <br/>
-    <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg">
-    <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/zig/zig-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg">
-  <img height="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
-
+  <a href="https://www.linkedin.com/in/ulysse-mercadal-371a68297" target="_blank">
+    <img alt="my LinkedIn" width="50px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg" />
+  </a>
 </p>
 
-<br/>
-<p align='center'>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=6"" width="49%" />
+<p align="center">
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Git" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg" alt="Bash" />
 </p>
 
-<br/>
+<p align="center">
+  <img height="45" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/C_Programming_Language.svg/760px-C_Programming_Language.svg.png?20201031132917" alt="C" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++" />
+    <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/opengl/opengl-original.svg" alt="OpenGL" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vulkan/vulkan-original.svg" alt="Vulkan" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/zig/zig-original.svg" alt="Zig" />
+</p>
 
-🌍 `<About me/>`
+<p align="center">
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="TypeScript" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" />
+
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="MongoDB" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prisma/prisma-original.svg" alt="Prisma" />
+</p>
+
+<p align="center">
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nestjs/nestjs-original.svg" alt="NestJS" />
+  <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" alt="FastAPI" />
+</p>
+
 ```python
-class lipoutou34:
+class UMercadal:
     def __init__(self):
-        self.name = "ulysse mercadal"
-        self.alias = "lipoutou34"
+        self.name = "Ulysse Mercadal"
         self.age = 20
-        self.role = "student"
-        self.education = "Epitech Lyon"
+        self.role = "3rd year c.s student"
+        self.education = "Epitech Lyon and Paris"
         self.languages = ["French", "English"]
-        self.interests = ["bouldering", "alpinism"]
-
+        self.interests = ["Solo traveling", "code", "moutain sports"]
+    
     def get_info(self):
-        info = f"👋 Hi, I'm {self.name} aka {self.alias}!\n"
+        info = f"👋 Hi, I'm {self.name}!\n"
         info += f"👨‍💻 I'm a {self.age}-year-old {self.role}.\n"
         info += f"🎓 Currently studying at {self.education}.\n"
-        info += f"🌐 I can communicate in {self.languages[0]} and {self.languages[1]}.\n"
-        info += f"💡 My interests include: {' '.join(self.interests)}."
+        info += f"🌐 I can fluently communicate in {', '.join(self.languages)}.\n"
+        info += f"💡 My interests include: {', '.join(self.interests)}."
         return info
-
-lipoutou34 = lipoutou34()
-print(lipoutou34.get_info())
+UMercadal = UMercadal()
+print(UMercadal.get_info())
 ```
+
+---
+
+<p align='center'>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=8" alt="Top Languages" />
+</p>
