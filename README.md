@@ -57,9 +57,5 @@ print(UMercadal.get_info())
 ```
 ---
 <p align='center'>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=8" alt="Top Languages" />
-</p>
----
-<p align='center'>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=8" alt="Top Languages" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=6" alt="Top Languages" />
 </p>
