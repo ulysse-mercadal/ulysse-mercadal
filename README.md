@@ -34,6 +34,7 @@
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nestjs/nestjs-original.svg" alt="NestJS" />
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" alt="FastAPI" />
 </p>
+
 ```python
 class UMercadal:
     def __init__(self):
