@@ -35,6 +35,14 @@
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" />
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" alt="Flutter" />
 </p>
+<br/>
+
+---
+
+<br/>
+<p align="center" >
+  <img height="300" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&layout=compact&theme=dark" alt="Most used Languages"
+</p>
 
 ---
 
