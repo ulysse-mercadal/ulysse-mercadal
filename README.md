@@ -39,13 +39,6 @@
 
 ---
 
-<br/>
-<p align="center" >
-  <img height="300" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&layout=compact&theme=dark" alt="Most used Languages"
-</p>
-
----
-
 ```python
 class UMercadal:
     def __init__(self):
