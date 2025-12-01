@@ -36,11 +36,14 @@
   <img height="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" alt="Flutter" />
 </p>
 <br/>
+
 ---
+
 <br/>
 <p align='center'>
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ulysse-mercadal&theme=dark&layout=compact&langs_count=6" alt="Top Languages" />
 </p>
+
 ---
 
 ```python
