@@ -1,0 +1,12 @@
+{
+  "name": "portefolio-monorepo",
+  "private": true,
+  "workspaces": [
+    "front",
+    "api"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=front",
+    "build": "npm run build --workspace=front && npm run build --workspace=api"
+  }
+}

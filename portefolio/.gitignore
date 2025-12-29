@@ -1,0 +1,76 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+*.lcov
+.nyc_output
+
+# Production builds
+/build
+/dist
+/.next/
+/out/
+.vercel
+
+# Misc
+.DS_Store
+*.pem
+.AppleDouble
+.LSOverride
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables
+.env
+.env*.local
+.env.development
+.env.production
+.env.test
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Prisma
+/prisma/migrations/
+!prisma/migrations/.gitkeep
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
