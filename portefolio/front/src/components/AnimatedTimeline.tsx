@@ -41,6 +41,9 @@ const timelineData: TimelineItem[] = [
   },
 ];
 
+const ITEM_HEIGHT = 200; // Height of each item + margin
+const TOTAL_ITEMS = timelineData.length;
+
 interface ExperienceItemProps {
   item: TimelineItem;
   index: number;
@@ -48,69 +51,61 @@ interface ExperienceItemProps {
 }
 
 const ExperienceItem = ({ item, index, scrollYProgress }: ExperienceItemProps) => {
-  const itemOpacity = useTransform(
-    scrollYProgress,
-    [index * 0.2, index * 0.2 + 0.1, (index + 1) * 0.2 - 0.1, (index + 1) * 0.2],
-    [0, 1, 1, 0]
-  );
-  const itemX = useTransform(
-    scrollYProgress,
-    [index * 0.2, index * 0.2 + 0.1],
-    ['100%', '0%']
-  );
+  const start = index / TOTAL_ITEMS;
+  const end = (index + 1) / TOTAL_ITEMS;
+
+  // Animate from left when it's its turn
+  const x = useTransform(scrollYProgress, [start, start + 0.1], ['-100%', '0%']);
+  const opacity = useTransform(scrollYProgress, [start, start + 0.1], [0, 1]);
+
+  // Stick to top and then get pushed up by subsequent items
+  const y = useTransform(scrollYProgress, [end, 1], [0, -(TOTAL_ITEMS - 1 - index) * ITEM_HEIGHT]);
 
   return (
     <motion.div
-      key={item.id}
-      style={{
-        opacity: itemOpacity,
-        x: itemX,
-        position: 'absolute',
-      }}
-      className="p-8 rounded-lg bg-white/5 border border-white/10 w-full"
+      style={{ y, x, opacity, position: 'absolute', top: `calc(50% - ${ITEM_HEIGHT / 2}px)` }}
+      className="w-full p-8"
     >
-      <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-      <p className="text-indigo-300 italic">{item.date}</p>
-      <p className="text-slate-300 mt-4">{item.description}</p>
+      <div className="p-8 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
+        <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+        <p className="text-indigo-300 italic">{item.date}</p>
+        <p className="text-slate-300 mt-4">{item.description}</p>
+      </div>
     </motion.div>
   );
 };
 
+
 const AnimatedTimeline = () => {
-  const ref = useRef(null);
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'center start'],
+    target: containerRef,
+    offset: ['start start', 'end end'],
   });
 
   return (
-    <div ref={ref} className="relative max-w-3xl mx-auto flex">
-      <div className="w-3/4">
-        {timelineData.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, x: 100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-            <p className="text-indigo-300 italic">{item.date}</p>
-            <p className="text-slate-300 mt-4">{item.description}</p>
-          </motion.div>
-        ))}
-      </div>
-      <div className="w-1/4 flex justify-center">
-        <svg width="20" height="100%" className="h-full">
-          <motion.path
-            d="M 10 0 L 10 1000"
-            stroke="white"
-            strokeWidth="2"
-            strokeDasharray="5 5"
-            style={{ pathLength: scrollYProgress }}
-          />
-        </svg>
+    <div ref={containerRef} className="relative h-[600vh]">
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="relative max-w-3xl mx-auto flex h-full">
+          <div className="w-3/4 relative">
+            {timelineData.map((item, index) => (
+              <ExperienceItem 
+                key={item.id}
+                item={item}
+                index={index}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+          </div>
+          <div className="w-1/4 flex justify-center items-center">
+            <div className="h-full w-px bg-white/10 relative">
+              <motion.div
+                className="absolute top-0 left-0 h-full w-px bg-indigo-500 origin-top"
+                style={{ scaleY: scrollYProgress }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

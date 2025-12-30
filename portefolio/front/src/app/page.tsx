@@ -124,7 +124,7 @@ export default function Home() {
             </section>
 
             <section id="my-experience" className="mb-20 mt-32">
-              <h2 className="text-4xl font-bold text-center mb-10 text-white inline-flex items-center gap-4">
+              <h2 className="text-4xl font-bold text-center text-white inline-flex items-center gap-4 mb-10">
                 <Briefcase className="w-10 h-10 text-indigo-400" /> My Experience
               </h2>
               <AnimatedTimeline />
