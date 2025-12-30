@@ -2,8 +2,9 @@
 
 import { useRef } from 'react';
 import { Sparkles, Briefcase, Target, ArrowRight, User, Search, Plane, Lightbulb } from 'lucide-react';
-import SimpleWorldMap from '@/components/simple-world-map';
+import AnimatedTimeline from '@/components/AnimatedTimeline';
 import Starfield from '@/components/Starfield'; // Import the new Starfield component
+import SimpleWorldMap from '@/components/simple-world-map';
 
 export default function Home() {
   return (
@@ -62,9 +63,9 @@ export default function Home() {
                   <p className="text-slate-300 leading-relaxed">
                     A brief introduction about my skills, passions, and what drives me in the world of development.
                   </p>
-                                </div>
-                              </a>
-                              {/* Card 2: My Experience */}
+                </div>
+              </a>
+              {/* Card 2: My Experience */}
               <a href="#my-experience" className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/10 to-indigo-500/10 border border-indigo-400/30 p-8 hover:border-indigo-400/50 transition-all duration-300 cursor-pointer">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl"></div>
                 <div className="relative z-10">
@@ -77,9 +78,9 @@ export default function Home() {
                   <p className="text-slate-300 leading-relaxed">
                     Details about my past roles, key projects, and the technologies I've mastered.
                   </p>
-                                </div>
-                              </a>
-                              {/* Card 3: What I'm Looking For */}
+                </div>
+              </a>
+              {/* Card 3: What I'm Looking For */}
               <a href="#what-im-looking-for" className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/10 border border-blue-400/30 p-8 hover:border-blue-400/50 transition-all duration-300 cursor-pointer">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
                 <div className="relative z-10">
@@ -99,69 +100,34 @@ export default function Home() {
             {/* Who I Am Section */}
             <section id="who-i-am" className="mb-20">
               <h2 className="text-4xl font-bold text-center mb-10 text-white inline-flex items-center gap-4">
-                <User className="w-10 h-10 text-blue-400" /> Who I Am
+                <User className="w-10 h-10 text-fuchsia-400" /> Who I Am
               </h2>
-              <div className="rounded-xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm mx-auto max-w-3xl transform hover:scale-[1.01] transition-transform duration-300 relative overflow-hidden group">
-                <div className="absolute inset-0 border border-transparent rounded-xl group-hover:border-blue-500 transition-all duration-300 pointer-events-none"></div>
-                <p className="text-slate-300 leading-relaxed text-lg mb-4">
-                  I am Ulysse Mercadal, a <span className="text-blue-300 font-semibold">French student developer</span> from Epitech Paris and Lyon, driven by a <span className="text-blue-300 font-semibold">project-based pedagogy</span> that fosters concrete problem-solving. My passion lies in crafting <span className="text-blue-300 font-semibold">innovative and impactful solutions</span> through clean code and a user-centric approach.
-                </p>
-                <p className="text-slate-300 leading-relaxed text-lg mb-4">
-                  Constantly <span className="text-blue-300 font-semibold">exploring new technologies</span>, I transform complex ideas into intuitive applications, always focusing on <span className="text-blue-300 font-semibold">code quality and user experience</span>. My journey is about continuous learning and pushing technological boundaries.
-                </p>
-                <SimpleWorldMap />
-              </div>
-            </section>
-
-            {/* My Experience Section */}
-            <section id="my-experience" className="mb-20">
-              <h2 className="text-4xl font-bold text-center mb-10 text-white inline-flex items-center gap-4">
-                <Briefcase className="w-10 h-10 text-indigo-400" /> My Experience
-              </h2>
-              <div className="rounded-xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm mx-auto max-w-3xl transform hover:scale-[1.01] transition-transform duration-300 relative overflow-hidden group">
-                <div className="absolute inset-0 border border-transparent rounded-xl group-hover:border-indigo-500 transition-all duration-300 pointer-events-none"></div>
-                <div className="relative border-l-2 border-indigo-500 pl-8 ml-4"> {/* Timeline container */}
-                  {/* BPCE IT Experience */}
-                  <div className="mb-8 relative">
-                    <div className="absolute -left-4 top-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-slate-950 z-10"></div> {/* Dot */}
-                    <h3 className="text-xl font-semibold text-white mb-2">Fullstack Developer - BPCE IT</h3>
-                    <p className="text-slate-400 text-sm italic mb-4">September 2023 - February 2024 (6 months)</p>
-                    <p className="text-slate-300 leading-relaxed text-lg">
-                      During my 6-month internship at BPCE IT, I actively applied Epitech's <span className="text-indigo-300 font-semibold">project-based pedagogy</span> in a professional setting. I contributed to the <span className="text-indigo-300 font-semibold">entire application lifecycle</span>, from backend to frontend, utilizing <span className="text-indigo-300 font-semibold">TypeScript, React, Node.js, and NestJS</span>. This experience enhanced my skills in <span className="text-indigo-300 font-semibold">collaboration, technical rigor, and adaptation</span> to new requirements, involving the <span className="text-indigo-300 font-semibold">design, development, and maintenance</span> of critical software solutions.
-                    </p>
+              <div className="relative mx-auto max-w-7xl overflow-hidden group">
+                <div className="flex gap-6 transition-transform duration-500">
+                  {/* Carte principale - masquée en dessous de 1280px */}
+                  <div className="hidden min-[1280px]:block rounded-xl bg-white/5 border border-white/10 p-6 md:p-10 backdrop-blur-sm h-[400px] md:h-[500px] lg:h-[580px] w-full shrink-0 transition-all duration-500 min-[1280px]:group-hover:scale-50 min-[1280px]:group-hover:-translate-x-[180px] xl:group-hover:-translate-x-[220px] overflow-hidden">
+                    <SimpleWorldMap />
                   </div>
-
-                  {/* Epitech Entry */}
-                  <div className="mb-8 relative">
-                    <div className="absolute -left-4 top-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-slate-950 z-10"></div> {/* Dot */}
-                    <h3 className="text-xl font-semibold text-white mb-2">Epitech Paris</h3>
-                    <p className="text-slate-400 text-sm italic mb-4">January 2024</p>
-                    <p className="text-slate-300 leading-relaxed text-lg">
-                      Began my journey at <span className="text-indigo-300 font-semibold">Epitech Paris</span>, immersing myself in a <span className="text-indigo-300 font-semibold">project-based pedagogy</span> that emphasizes practical skills and autonomous learning.
-                    </p>
-                  </div>
-
-                  {/* Zappy Project */}
-                  <div className="mb-8 relative">
-                    <div className="absolute -left-4 top-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-slate-950 z-10"></div> {/* Dot */}
-                    <h3 className="text-xl font-semibold text-white mb-2">Zappy Project (Epitech)</h3>
-                    <p className="text-slate-400 text-sm italic mb-4">Early 2025</p>
-                    <p className="text-slate-300 leading-relaxed text-lg">
-                      Developed "Zappy," a <span className="text-indigo-300 font-semibold">multiplayer AI strategy game</span> in a networked environment. Key features included a <span className="text-indigo-300 font-semibold">3D client built with OpenGL</span>, leveraging an improved engine that now supports <span className="text-indigo-300 font-semibold">animations with bones, complex textures, and 3D file formats like GLTF/FBX</span>.
-                    </p>
-                  </div>
-
-                  {/* Area Project */}
-                  <div className="mb-8 relative">
-                    <div className="absolute -left-4 top-1 w-3 h-3 rounded-full bg-indigo-500 border-2 border-slate-950 z-10"></div> {/* Dot */}
-                    <h3 className="text-xl font-semibold text-white mb-2">Area Project (Epitech)</h3>
-                    <p className="text-slate-400 text-sm italic mb-4">Late 2025</p>
-                    <p className="text-slate-300 leading-relaxed text-lg">
-                      Created "Area," a <span className="text-indigo-300 font-semibold">microservices-based automation platform</span>, akin to n8n. This <span className="text-indigo-300 font-semibold">modular architecture</span> allowed seamless integration with services like <span className="text-indigo-300 font-semibold">Discord, Google Mail/Sheets, YouTube, Twitch, and Spotify</span>.
-                    </p>
+                  {/* Volet à droite qui slide depuis l'extérieur */}
+                  <div className="w-full min-[1280px]:w-112.5 shrink-0 transition-transform duration-500 min-[1280px]:group-hover:-translate-x-[420px] xl:group-hover:-translate-x-[500px]">
+                    <div className="rounded-xl bg-white/5 border border-fuchsia-500/50 backdrop-blur-sm p-6 md:p-8 h-full flex flex-col justify-center shadow-2xl shadow-fuchsia-500/20">
+                      <p className="text-slate-300 leading-relaxed text-base md:text-lg mb-4">
+                        I am Ulysse Mercadal, a French student developer from Epitech Paris and Lyon, driven by a project-based pedagogy that fosters concrete problem-solving. My passion lies in crafting innovative and impactful solutions through clean code and a user-centric approach.
+                      </p>
+                      <p className="text-slate-300 leading-relaxed text-base md:text-lg">
+                        Constantly exploring new technologies, I transform complex ideas into intuitive applications, always focusing on code quality and user experience. My journey is about continuous learning and pushing technological boundaries.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
+            </section>
+
+            <section id="my-experience" className="mb-20 mt-32">
+              <h2 className="text-4xl font-bold text-center mb-10 text-white inline-flex items-center gap-4">
+                <Briefcase className="w-10 h-10 text-indigo-400" /> My Experience
+              </h2>
+              <AnimatedTimeline />
             </section>
 
             {/* What I'm Looking For Section */}

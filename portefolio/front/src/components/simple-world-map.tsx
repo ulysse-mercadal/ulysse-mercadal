@@ -98,19 +98,19 @@ const frenchCities = [
 ];
 
 const SimpleWorldMap = () => {
-  const map = new DottedMap({ height: 100, grid: "diagonal" });
+  const map = new DottedMap({ height: 60, grid: "diagonal" });
 
   frenchCities.forEach((city) => {
     map.addPin({
       lat: city.lat,
       lng: city.lng,
-      svgOptions: { color: "#FF69B4", radius: 0.22 },
+      svgOptions: { color: "#FF69B4", radius: 0.2 }, // Changed radius to match background dots
     });
   });
 
   const svgMap = map.getSVG({
-    radius: 0.22,
-    color: "#423B38", // Background color for the dots that are not pins
+    radius: 0.2,
+    color: "#423B38",
     shape: "circle",
   });
 
@@ -120,6 +120,7 @@ const SimpleWorldMap = () => {
       style={{
         width: "100%",
         height: "auto",
+        maxHeight: "200px",
       }}
     />
   );
