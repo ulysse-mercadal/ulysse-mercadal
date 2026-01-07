@@ -1,12 +1,8 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { scalePow, scaleSqrt, scaleLinear } from 'd3';
+import { scaleLinear } from 'd3';
 
-interface TextEffectProps {
-  currentEffect: number;
-}
-
-export default function TextEffect({ currentEffect }: TextEffectProps) {
+export default function TextEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const paperRef = useRef<any>(null);
   const fontRef = useRef<any>(null);
@@ -64,7 +60,7 @@ export default function TextEffect({ currentEffect }: TextEffectProps) {
 
         // Base Text Setup
         const text = "ULYSSE MERCADAL";
-        const fontSize = Math.min(view.bounds.width / 10, 150); 
+        const fontSize = Math.min(view.bounds.width / 10, 150) / 3; 
         const y = view.center.y;
         let currentX = 0;
         const fontGlyphs = font.stringToGlyphs(text);
@@ -90,55 +86,7 @@ export default function TextEffect({ currentEffect }: TextEffectProps) {
            originalPos[i] = g.position.clone();
         });
 
-        // Effect Switch
-        if (currentEffect === 4) {
-            applyRiseAndBlur(paper, view, glyphs, originalPos, group);
-        } else if (currentEffect === 0) {
-            applyBezierBubble(paper, view, glyphs, originalPos, group);
-        } else {
-             // Default / Placeholder for others
-             applyRiseAndBlur(paper, view, glyphs, originalPos, group);
-        }
-    };
-
-    // Effect 4: Rise and Blur
-    const applyRiseAndBlur = (paper: any, view: any, glyphs: any[], originalPos: any[], group: any) => {
-        const blurAmountScale = scalePow().domain([0, 300]).clamp(true).range([0, 10]);
-        const offsetScale = scaleSqrt().domain([0, 400]).clamp(true).range([0, 100]);
-        
-        const state = {
-            point: new paper.Point(view.center),
-            tPoint: new paper.Point(view.center),
-            lgCenter: group.bounds.center,
-        };
-
-        view.onMouseMove = (event: any) => {
-            state.tPoint = event.point;
-        };
-
-        view.onFrame = () => {
-            state.point = state.point.add(state.tPoint.subtract(state.point).multiply(0.1));
-            const dist = state.lgCenter.y - state.point.y;
-
-            if (canvasRef.current) {
-                const blurVal = blurAmountScale(Math.abs(dist));
-                canvasRef.current.style.filter = `blur(${blurVal}px)`;
-            }
-
-            const len = glyphs.length - 1;
-            const middle = len / 2;
-
-            glyphs.forEach((g: any, i: number) => {
-                let offsetNum;
-                if (dist > 0) {
-                    offsetNum = middle - i;  
-                } else {
-                    offsetNum = i - middle;    
-                }
-                const offset = offsetNum * offsetScale(Math.abs(dist));
-                g.position = new paper.Point(originalPos[i].x, originalPos[i].y + offset);
-            });
-        };
+        applyBezierBubble(paper, view, glyphs, originalPos, group);
     };
 
     // Effect 0: Bezier Bubble
@@ -197,29 +145,6 @@ export default function TextEffect({ currentEffect }: TextEffectProps) {
         // Hide initially
         bubbleGroup.visible = false;
         circleOutline.visible = false;
-        
-        // Show standard glyphs initially? No, the effect replaces them. 
-        // But if bubble is hidden, we see nothing.
-        // In the Korean site, the original glyphs are hidden and replaced by points?
-        // Let's check logic: "glyph.visible = false". So we only see the bubble content.
-        // Wait, "points" are added to "bubbleGroup".
-        
-        // Actually, let's keep original glyphs visible but maybe dim? 
-        // The Korean code: "glyph.strokeWidth = 0; ... visible=false" inside loop.
-        // But then: "group.clipped = true".
-        // It seems the effect reveals the "wireframe" (dashed) version inside the bubble, and points are always there?
-        // Wait, "bezierBubble.points.addChild(p)"
-        // And "bezierBubble.group = new Group([maskCircle].concat(maskedGlyphs).concat(points))"
-        // So everything is inside the clip.
-        // This means OUTSIDE the bubble, nothing is visible? 
-        // That would be weird for a name.
-        // Re-reading Korean code:
-        // "_.each(_this.glyphs, (glyph, i) => { ... glyph.strokeWidth = 0; ... maskedGlyphs.push(_g); })"
-        // It seems it hides the original solid text.
-        // Maybe the points are visible everywhere?
-        // No, points are added to `bezierBubble.points`, which is added to `bezierBubble.group`.
-        // So the text is ONLY visible inside the bubble.
-        // That seems to be the effect: A flashlight revealing the wireframe.
 
         let theta = 0;
 
@@ -266,7 +191,7 @@ export default function TextEffect({ currentEffect }: TextEffectProps) {
         window.removeEventListener('resize', handleResize);
         if(projectRef.current) projectRef.current.clear();
     };
-  }, [currentEffect]);
+  }, []);
 
   return (
     <canvas 
