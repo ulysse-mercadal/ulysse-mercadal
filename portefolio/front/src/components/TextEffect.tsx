@@ -131,7 +131,7 @@ export default function TextEffect() {
             prevPoint: new paper.Point(view.center),
             size: 10,
             tSize: 10,
-            firstMoved: false
+            firstMoved: true // Start visible
         };
 
         const sizeScale = scaleLinear().domain([0, 300]).clamp(true).range([180, 1]);
@@ -142,14 +142,13 @@ export default function TextEffect() {
         const bubbleGroup = new paper.Group([maskCircle, ...maskedGlyphs, points]);
         bubbleGroup.clipped = true;
         
-        // Hide initially
-        bubbleGroup.visible = false;
-        circleOutline.visible = false;
+        // Ensure visible initially
+        bubbleGroup.visible = true;
+        circleOutline.visible = true;
 
         let theta = 0;
 
         view.onMouseMove = (e: any) => {
-            bubble.firstMoved = true;
             bubble.tPoint = e.point;
             const dist = Math.abs(bubble.point.y - group.bounds.center.y);
             bubble.tSize = sizeScale(dist);
@@ -162,10 +161,7 @@ export default function TextEffect() {
              bubble.size += (bubble.tSize - bubble.size) * 0.2;
              bubble.size += Math.sin(theta + Math.PI * 2) * (bubble.tSize / 100);
 
-             if (bubble.firstMoved) {
-                 bubbleGroup.visible = true;
-                 circleOutline.visible = true;
-             }
+             // Removed conditional visibility check
              
              const radius = maskCircle.bounds.width / 2;
              // Avoid division by zero or negative scaling if size is 0
