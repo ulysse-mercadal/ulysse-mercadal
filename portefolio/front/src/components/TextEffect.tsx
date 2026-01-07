@@ -1,156 +1,272 @@
 'use client';
 import { useEffect, useRef } from 'react';
-// import paper from 'paper';
-// import opentype from 'opentype.js';
-import { scalePow, scaleSqrt } from 'd3';
-// import type { Item, Point, MouseEvent } from 'paper';
+import { scalePow, scaleSqrt, scaleLinear } from 'd3';
 
-export default function TextEffect() {
+interface TextEffectProps {
+  currentEffect: number;
+}
+
+export default function TextEffect({ currentEffect }: TextEffectProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const paperRef = useRef<any>(null);
+  const fontRef = useRef<any>(null);
+  const projectRef = useRef<any>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
 
     let paper: any;
     let opentype: any;
-    let project: any;
-    
-    // Variables to store state
-    let glyphs: any[] = []; 
-    let originalPos: any[] = []; // paper.Point
-    
-    // Scales (d3 scales are pure JS, safe)
-    const blurAmountScale = scalePow().domain([0, 300]).clamp(true).range([0, 10]);
-    const offsetScale = scaleSqrt().domain([0, 400]).clamp(true).range([0, 100]);
 
     const init = async () => {
-        try {
-            paper = (await import('paper')).default;
-            opentype = (await import('opentype.js')).default;
-        } catch (e) {
-            console.error("Failed to load libraries", e);
-            return;
+        if (!paperRef.current) {
+            try {
+                paper = (await import('paper')).default;
+                opentype = (await import('opentype.js')).default;
+                paperRef.current = paper;
+                paper.setup(canvasRef.current);
+                projectRef.current = paper.project;
+            } catch (e) {
+                console.error("Failed to load libraries", e);
+                return;
+            }
+        } else {
+            paper = paperRef.current;
         }
 
-        // Initialize Paper.js
-        paper.setup(canvasRef.current);
+        if (!fontRef.current) {
+             opentype = (await import('opentype.js')).default;
+             return new Promise((resolve) => {
+                 opentype.load('/fonts/Roboto-Bold.ttf', (err: any, font: any) => {
+                     if (err || !font) {
+                         console.error('Font loading error:', err);
+                         return;
+                     }
+                     fontRef.current = font;
+                     runEffect();
+                     resolve(true);
+                 });
+             });
+        } else {
+            runEffect();
+        }
+    };
+
+    const runEffect = () => {
+        if (!paperRef.current || !fontRef.current || !projectRef.current) return;
+        const paper = paperRef.current;
+        const font = fontRef.current;
         const view = paper.view;
-        project = paper.project;
 
-        const riseAndBlur = {
-            point: new paper.Point(view.center),
-            tPoint: new paper.Point(view.center),
-            lgCenter: new paper.Point(view.center),
-        };
+        projectRef.current.clear();
+        view.onFrame = null;
+        view.onMouseMove = null;
 
-        const loadFont = () => {
-        opentype.load('/fonts/Roboto-Bold.ttf', (err: any, font: any) => {
-            if (err || !font) {
-            console.error('Font loading error:', err);
-            return;
-            }
+        // Base Text Setup
+        const text = "ULYSSE MERCADAL";
+        const fontSize = Math.min(view.bounds.width / 10, 150); 
+        const y = view.center.y;
+        let currentX = 0;
+        const fontGlyphs = font.stringToGlyphs(text);
+        const glyphs: any[] = [];
+        const originalPos: any[] = [];
 
-            const text = "ULYSSE MERCADAL";
-            // Responsive font size
-            const fontSize = Math.min(view.bounds.width / 10, 150); 
-            const y = view.center.y;
-            
-            // Initial X (will center later)
-            let currentX = 0;
-
-            const fontGlyphs = font.stringToGlyphs(text);
-
-            // Convert glyphs to Paper.js paths
-            fontGlyphs.forEach((glyphData: any) => {
+        fontGlyphs.forEach((glyphData: any) => {
             const pathData = glyphData.getPath(currentX, y, fontSize);
             const path = new paper.CompoundPath(pathData.toPathData(2));
-            path.fillColor = new paper.Color('#ffffff'); // White text
+            path.fillColor = new paper.Color('#ffffff');
             
             glyphs.push(path);
-            originalPos.push(path.position.clone());
-
+            
             if (glyphData.advanceWidth) {
                 currentX += glyphData.advanceWidth * (1/font.unitsPerEm * fontSize);
             }
-            });
-
-            // Group to center
-            const group = new paper.Group(glyphs);
-            group.position = view.center;
-            
-            // Update original positions after centering
-            glyphs.forEach((g: any, i: number) => {
-            originalPos[i] = g.position.clone();
-            });
-            
-            riseAndBlur.lgCenter = group.bounds.center;
         });
+
+        const group = new paper.Group(glyphs);
+        group.position = view.center;
+        
+        glyphs.forEach((g: any, i: number) => {
+           originalPos[i] = g.position.clone();
+        });
+
+        // Effect Switch
+        if (currentEffect === 4) {
+            applyRiseAndBlur(paper, view, glyphs, originalPos, group);
+        } else if (currentEffect === 0) {
+            applyBezierBubble(paper, view, glyphs, originalPos, group);
+        } else {
+             // Default / Placeholder for others
+             applyRiseAndBlur(paper, view, glyphs, originalPos, group);
+        }
+    };
+
+    // Effect 4: Rise and Blur
+    const applyRiseAndBlur = (paper: any, view: any, glyphs: any[], originalPos: any[], group: any) => {
+        const blurAmountScale = scalePow().domain([0, 300]).clamp(true).range([0, 10]);
+        const offsetScale = scaleSqrt().domain([0, 400]).clamp(true).range([0, 100]);
+        
+        const state = {
+            point: new paper.Point(view.center),
+            tPoint: new paper.Point(view.center),
+            lgCenter: group.bounds.center,
         };
 
-        loadFont();
-
-        // Interactions
         view.onMouseMove = (event: any) => {
-        riseAndBlur.tPoint = event.point;
+            state.tPoint = event.point;
         };
 
         view.onFrame = () => {
-        // Smooth mouse follow
-        riseAndBlur.point = riseAndBlur.point.add(
-            riseAndBlur.tPoint.subtract(riseAndBlur.point).multiply(0.1)
-        );
+            state.point = state.point.add(state.tPoint.subtract(state.point).multiply(0.1));
+            const dist = state.lgCenter.y - state.point.y;
 
-        // Effect Logic (Rise and Blur)
-        // Calculate distance from text center Y
-        const dist = riseAndBlur.lgCenter.y - riseAndBlur.point.y;
-        
-        // Apply CSS Blur
-        if (canvasRef.current) {
-            // Only blur if distance is significant to avoid constant repaint
-            const blurVal = blurAmountScale(Math.abs(dist));
-            canvasRef.current.style.filter = `blur(${blurVal}px)`;
-        }
-
-        // Move Glyphs
-        const len = glyphs.length - 1;
-        const middle = len / 2;
-
-        glyphs.forEach((g: any, i: number) => {
-            let offsetNum;
-            if (dist > 0) {
-                // Mouse above text
-                offsetNum = middle - i;  
-            } else {
-                // Mouse below text
-                offsetNum = i - middle;    
+            if (canvasRef.current) {
+                const blurVal = blurAmountScale(Math.abs(dist));
+                canvasRef.current.style.filter = `blur(${blurVal}px)`;
             }
+
+            const len = glyphs.length - 1;
+            const middle = len / 2;
+
+            glyphs.forEach((g: any, i: number) => {
+                let offsetNum;
+                if (dist > 0) {
+                    offsetNum = middle - i;  
+                } else {
+                    offsetNum = i - middle;    
+                }
+                const offset = offsetNum * offsetScale(Math.abs(dist));
+                g.position = new paper.Point(originalPos[i].x, originalPos[i].y + offset);
+            });
+        };
+    };
+
+    // Effect 0: Bezier Bubble
+    const applyBezierBubble = (paper: any, view: any, glyphs: any[], originalPos: any[], group: any) => {
+        if (canvasRef.current) canvasRef.current.style.filter = 'none';
+
+        // Prepare Bubble Elements
+        const points = new paper.Group();
+        const maskedGlyphs: any[] = [];
+        
+        // Setup tiny rectangles on path segments
+        glyphs.forEach((glyph) => {
+            // Need to handle CompoundPath children or Path segments
+            const parts = glyph.children ? glyph.children : [glyph];
             
-            const offset = offsetNum * offsetScale(Math.abs(dist));
+            parts.forEach((part: any) => {
+               if(part.segments) {
+                   part.segments.forEach((seg: any) => {
+                       const p = new paper.Path.Rectangle(seg.point.subtract(new paper.Point(2,2)), 4);
+                       p.fillColor = 'white';
+                       points.addChild(p);
+                   });
+               }
+            });
+
+            // Dashed Clone for Mask
+            const clone = glyph.clone();
+            clone.fillColor = 'black'; // Background color (inverted logic from white theme)
+            clone.strokeColor = 'white';
+            clone.dashArray = [1, 3];
+            clone.strokeWidth = 1;
+            maskedGlyphs.push(clone);
             
-            // Reset to original X, update Y
-            g.position = new paper.Point(
-                originalPos[i].x, 
-                originalPos[i].y + offset
-            );
+            // Hide original
+            glyph.visible = false; 
         });
+
+        // Bubble State
+        const bubble = {
+            point: new paper.Point(view.center),
+            tPoint: new paper.Point(view.center),
+            prevPoint: new paper.Point(view.center),
+            size: 10,
+            tSize: 10,
+            firstMoved: false
         };
 
-        // Handle Resize
-        const handleResize = () => {
-            project.clear();
-            glyphs = [];
-            originalPos = [];
-            loadFont();
+        const sizeScale = scaleLinear().domain([0, 300]).clamp(true).range([180, 1]);
+
+        const maskCircle = new paper.Path.Circle({ center: view.center,WB: 10, fillColor: 'green' }); // Mask (color doesn't matter)
+        const circleOutline = new paper.Path.Circle({ center: view.center, radius: 10, strokeColor: 'white' });
+
+        const bubbleGroup = new paper.Group([maskCircle, ...maskedGlyphs, points]);
+        bubbleGroup.clipped = true;
+        
+        // Hide initially
+        bubbleGroup.visible = false;
+        circleOutline.visible = false;
+        
+        // Show standard glyphs initially? No, the effect replaces them. 
+        // But if bubble is hidden, we see nothing.
+        // In the Korean site, the original glyphs are hidden and replaced by points?
+        // Let's check logic: "glyph.visible = false". So we only see the bubble content.
+        // Wait, "points" are added to "bubbleGroup".
+        
+        // Actually, let's keep original glyphs visible but maybe dim? 
+        // The Korean code: "glyph.strokeWidth = 0; ... visible=false" inside loop.
+        // But then: "group.clipped = true".
+        // It seems the effect reveals the "wireframe" (dashed) version inside the bubble, and points are always there?
+        // Wait, "bezierBubble.points.addChild(p)"
+        // And "bezierBubble.group = new Group([maskCircle].concat(maskedGlyphs).concat(points))"
+        // So everything is inside the clip.
+        // This means OUTSIDE the bubble, nothing is visible? 
+        // That would be weird for a name.
+        // Re-reading Korean code:
+        // "_.each(_this.glyphs, (glyph, i) => { ... glyph.strokeWidth = 0; ... maskedGlyphs.push(_g); })"
+        // It seems it hides the original solid text.
+        // Maybe the points are visible everywhere?
+        // No, points are added to `bezierBubble.points`, which is added to `bezierBubble.group`.
+        // So the text is ONLY visible inside the bubble.
+        // That seems to be the effect: A flashlight revealing the wireframe.
+
+        let theta = 0;
+
+        view.onMouseMove = (e: any) => {
+            bubble.firstMoved = true;
+            bubble.tPoint = e.point;
+            const dist = Math.abs(bubble.point.y - group.bounds.center.y);
+            bubble.tSize = sizeScale(dist);
         };
-        view.onResize = handleResize;
+
+        view.onFrame = () => {
+             theta += 0.06;
+             bubble.point = bubble.point.add(bubble.tPoint.subtract(bubble.point).multiply(0.2));
+             
+             bubble.size += (bubble.tSize - bubble.size) * 0.2;
+             bubble.size += Math.sin(theta + Math.PI * 2) * (bubble.tSize / 100);
+
+             if (bubble.firstMoved) {
+                 bubbleGroup.visible = true;
+                 circleOutline.visible = true;
+             }
+             
+             const radius = maskCircle.bounds.width / 2;
+             // Avoid division by zero or negative scaling if size is 0
+             const s = (bubble.size / radius) || 0.1;
+             
+             maskCircle.position = bubble.point;
+             circleOutline.position = bubble.point;
+             
+             maskCircle.scale(s);
+             circleOutline.scale(s);
+        };
     };
 
     init();
 
-    return () => {
-      if (project) project.remove();
+    // Resize handler
+    const handleResize = () => {
+        init();
     };
-  }, []);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        if(projectRef.current) projectRef.current.clear();
+    };
+  }, [currentEffect]);
 
   return (
     <canvas 
