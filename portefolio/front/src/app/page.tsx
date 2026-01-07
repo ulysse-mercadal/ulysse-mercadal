@@ -1,5 +1,14 @@
-import HomeClient from '@/components/HomeClient';
+'use client';
 
-export default function Home() {
-  return <HomeClient />;
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const App = dynamic(() => import('../components/App'), { ssr: false });
+
+export default function Page() {
+  return (
+    <div id="root">
+        <App />
+    </div>
+  );
 }

@@ -1,0 +1,44 @@
+@use 'reset';
+@use 'body';
+
+$base_font_size       : 14px; // px;
+$base_line_height     : 22px; // px
+$background_color: #FFF;
+$text_color: #000;
+
+body[data-theme='white'] {
+  @include body.generate-body($base_font_size, $base_line_height, $background_color, $text_color);
+
+  canvas.ef-0 { //hv
+    cursor: auto;
+    cursor: url('/assets/cursor-hv-black.svg') 23 23, auto;
+  }
+  canvas.ef-1 { //h
+    cursor: auto;
+    cursor: url('/assets/cursor-h-black.svg') 23 23, auto;
+  }
+  canvas.ef-2 { //hv
+    cursor: auto;
+    cursor: url('/assets/cursor-hv.svg') 23 23, auto;
+  }
+  canvas.ef-3 { //v
+    cursor: auto;
+    cursor: url('/assets/cursor-v-black.svg') 23 23, auto;
+  }
+  canvas.ef-4 { //v
+    cursor: auto;
+    cursor: url('/assets/cursor-v-black.svg') 23 23, auto;
+  }
+  canvas.efs-0 { //hv
+    cursor: auto;
+    cursor: url('/assets/cursor-hv-black.svg') 23 23, auto;
+  }
+  canvas.efs-1 { //hv
+    cursor: auto;
+    cursor: url('/assets/cursor-hv-black.svg') 23 23, auto;
+  }
+  canvas.efs-2 { //hv
+    cursor: auto;
+    cursor: url('/assets/cursor-hv-black.svg') 23 23, auto;
+  }
+}
