@@ -36,7 +36,7 @@ export const ProjectCard = ({
       padding: 'clamp(1.5rem, 5vw, 3rem)',
       border: `0.5px solid ${borderColor}`,
       borderRadius: '2px',
-      backgroundColor: isWhite ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      backgroundColor: isWhite ? '#ffffff' : '#000000',
       display: 'flex',
       flexDirection: 'column',
       gap: 'clamp(1rem, 3vw, 2rem)',

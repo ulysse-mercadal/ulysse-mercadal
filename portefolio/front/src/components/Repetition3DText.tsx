@@ -61,21 +61,21 @@ export const Repetition3DText = ({ text, color }: Repetition3DTextProps) => {
       marginTop: '10rem', // Added top margin
       marginBottom: '7rem'
     }}>
-      {[...Array(8)].map((_, i) => (
+      {[...Array(40)].map((_, i) => (
         <span
           key={i}
           style={{
             position: i === 0 ? 'relative' : 'absolute',
             top: 0,
             left: '50%',
-            transform: `translate(calc(-50% + ${i * mousePos.x * movementFactor}px), ${i * mousePos.y * movementFactor}px) scale(${1 - i * 0.02})`,
-            zIndex: 10 - i,
+            transform: `translate(calc(-50% + ${i * mousePos.x * movementFactor}px), ${i * mousePos.y * movementFactor}px) scale(${1 - i * 0.01})`,
+            zIndex: 40 - i,
             color: i === 0 ? color : 'transparent',
             WebkitTextStroke: `1px ${color}`,
             whiteSpace: 'nowrap',
             display: 'block',
             transition: 'transform 0.1s ease-out',
-            opacity: 1 - i * 0.1,
+            opacity: 1 - i / 15,
             maxWidth: '100%',
             overflow: 'visible'
           }}

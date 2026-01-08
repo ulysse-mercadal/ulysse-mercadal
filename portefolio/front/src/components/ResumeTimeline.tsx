@@ -20,7 +20,7 @@ interface TimelineEntryProps {
 const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon, sectionIsBlack, technologies, links, isMobile }: TimelineEntryProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
+
   const textColor = sectionIsBlack ? '#ffffff' : '#000000';
   const borderColor = sectionIsBlack ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
   const cardBg = sectionIsBlack ? '#000000' : '#ffffff';
@@ -55,8 +55,8 @@ const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon,
         initial={{ opacity: 0, x: isMobile ? 0 : (isLeft ? -50 : 50), y: isMobile ? 30 : 0 }}
         animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        style={{ 
-          width: isMobile ? '100%' : '46%', 
+        style={{
+          width: isMobile ? '100%' : '46%',
           maxWidth: isMobile ? 'min(100%, 800px)' : 'none',
           display: 'flex',
           justifyContent: 'center'
@@ -73,7 +73,8 @@ const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon,
           display: 'flex',
           flexDirection: 'column',
           gap: '1.5rem',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          transition: 'all 0.3s ease' // Added transition
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
             <div style={{
@@ -93,7 +94,7 @@ const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon,
               <p style={{ opacity: 0.9, margin: 0, fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: '600' }}>{subtitle}</p>
             </div>
           </div>
-          
+
           <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.2rem)', lineHeight: '1.6', opacity: 0.8, margin: 0 }}>
             {description}
           </p>
@@ -119,16 +120,16 @@ const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon,
           {links && (
             <div style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
               {links.map((link, i) => (
-                <a 
-                  key={i} 
-                  href={link.url} 
-                  target="_blank" 
+                <a
+                  key={i}
+                  href={link.url}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '0.5rem', 
-                    color: textColor, 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    color: textColor,
                     textDecoration: 'none',
                     fontSize: 'clamp(0.8rem, 2vw, 1rem)',
                     fontWeight: '600',
@@ -176,29 +177,29 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
+
   const timelineData = [
     {
-      date: "6 Months",
+      date: "5 Months",
       title: "Full Stack Developer Intern",
       subtitle: "BPCE-IT",
-      description: "Developed large-scale banking applications within the IT subsidiary of France's second-largest banking group. Focused on building robust, secure, and high-performance systems in a complex financial ecosystem.",
+      description: "Working within the IT services of the 2nd largest French banking group (Banque Populaire Caisse d'Epargne), I was part of the FabLab. My mission was to experiment with emerging technologies to identify and develop innovative use cases for the company.",
       icon: Briefcase,
-      technologies: ["FastAPI", "MongoDB", "React Admin", "Python", "Docker"]
+      technologies: ["React", "Figma", "MongoDB", "Python", "FastAPI", "OpenTelemetry"]
     },
     {
       date: "6 Months",
-      title: "Part-time Teacher",
+      title: "Regional Educational Assistant (AER)",
       subtitle: "Epitech Lyon",
-      description: "Mentored and evaluated junior students on technical projects. Taught core programming concepts, software architecture, and best practices, fostering technical excellence.",
+      description: "In charge of supporting and mentoring lower-year classes. Responsible for guiding students through their technical journey, evaluating projects, and ensuring pedagogical success.",
       icon: GraduationCap,
       technologies: ["Haskell", "C++", "C", "Java"]
     },
     {
-      date: "Contact",
+      date: "future...",
       title: "Your Company?",
       subtitle: "Open to new opportunities",
-      description: "My next experience could be with you! I'm looking for challenging projects where I can apply my expertise in low-level programming, graphics, and full-stack development.",
+      description: "My next experience could be with you! I'm looking for challenging projects where I can apply my expertise in low-level programming, graphics, and full-stack development",
       icon: Send,
       links: [
         { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
@@ -210,7 +211,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
   return (
     <div style={{ width: '100%', maxWidth: '1200px', margin: 'clamp(4rem, 15vw, 150px) auto', padding: '0 20px', boxSizing: 'border-box' }}>
       <div style={{ position: 'relative' }}>
-        <div 
+        <div
           style={{
             position: 'absolute',
             left: '50%',
@@ -220,9 +221,9 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
             width: '1px',
             background: activeLineColor,
             zIndex: 1
-          }} 
+          }}
         />
-        
+
         {timelineData.map((item, index) => (
           <TimelineEntry
             key={index}

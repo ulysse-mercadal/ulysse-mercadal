@@ -19,6 +19,7 @@ import { ResponsiveText } from '../components/ResponsiveText';
 import { AnimatedText } from '../components/AnimatedText';
 import { ProjectCard } from '../components/ProjectCard';
 import { ResumeTimeline } from '../components/ResumeTimeline';
+import { Header } from '../components/Header';
 
 const ANIMATIONS = [
   { name: 'Wireframe (Bezier Bubble)', animation: bezierBubble },
@@ -224,53 +225,7 @@ export default function Page() {
       fontFamily: 'serif',
       boxSizing: 'border-box'
     }}>
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0 40px',
-        borderBottom: `0.5px solid ${backgroundMode === 'white' ? '#000000' : '#ffffff'}`,
-        backgroundColor: backgroundMode === 'white' ? '#ffffff' : '#000000',
-        zIndex: 1000,
-      }} >
-        <nav style={{ display: 'flex', gap: '30px' }}>
-          {['About', 'Projects', 'Experiences'].map(item => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                color: 'inherit',
-                textDecoration: 'none',
-                fontSize: '0.9rem',
-                letterSpacing: '1px',
-                textTransform: 'uppercase'
-              }} >
-              {item}
-            </a>
-          ))}
-        </nav>
-        <button
-          onClick={() => setBackgroundMode(prev => prev === 'white' ? 'black' : 'white')}
-          style={{
-            position: 'absolute',
-            right: '40px',
-            background: 'transparent',
-            border: 'none',
-            color: 'inherit',
-            cursor: 'pointer',
-            padding: '5px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-          {backgroundMode === 'white' ? <Moon size={20} /> : <Sun size={20} />}
-        </button>
-      </header>
+      <Header backgroundMode={backgroundMode} setBackgroundMode={setBackgroundMode} />
       <section style={{ height: '120vh', width: '100%', position: 'relative', overflow: 'hidden', boxSizing: 'border-box' }}>
         {!isFontLoaded && (
           <div style={{
