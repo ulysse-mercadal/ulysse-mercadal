@@ -11,6 +11,15 @@ import { bezierBubble } from '../components/animations/bezierBubble';
 import { sizeWaterfall } from '../components/animations/sizeWaterfall';
 import { shadowSkew } from '../components/animations/shadowSkew';
 import { riseAndBlur } from '../components/animations/riseAndBlur';
+
+// Extracted Components
+import { ZigZagDivider } from '../components/ZigZagDivider';
+import { Repetition3DText } from '../components/Repetition3DText';
+import { ResponsiveText } from '../components/ResponsiveText';
+import { AnimatedText } from '../components/AnimatedText';
+import { ProjectCard } from '../components/ProjectCard';
+import { ResumeTimeline } from '../components/ResumeTimeline';
+
 const ANIMATIONS = [
   { name: 'Wireframe (Bezier Bubble)', animation: bezierBubble },
   { name: 'Repetition 3D (Size Waterfall)', animation: sizeWaterfall },
@@ -18,250 +27,6 @@ const ANIMATIONS = [
   { name: 'Rise and Blur (Cascade Effect)', animation: riseAndBlur },
 ];
 const FONT_URL = "https://fonts.gstatic.com/s/nanummyeongjo/v6/9Bty3DZF0dXLMZlywRbVRNhxy2pLVGA5r_c.woff";
-
-const ZigZagDivider = ({ color }: { color: string }) => {
-  const [points, setPoints] = useState(40); // Default value
-
-  useEffect(() => {
-    // Calculate number of points based on container width to maintain consistent tooth size
-    const calculatePoints = () => {
-      // Get the container width
-      const containerWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
-      // Maintain a consistent tooth width (in pixels)
-      const toothWidth = 25; // Each tooth will be approximately 25px wide
-      // Calculate number of points based on container width
-      const calculatedPoints = Math.max(10, Math.floor(containerWidth / toothWidth));
-      return calculatedPoints;
-    };
-
-    // Set initial points
-    setPoints(calculatePoints());
-
-    // Update points on window resize
-    const handleResize = () => {
-      setPoints(calculatePoints());
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  let d = "M0,60 ";
-  for (let i = 0; i <= points; i++) {
-    const x = (i * 100) / points;
-    const y = i % 2 === 0 ? 60 : 0;
-    d += `L${x},${y} `;
-  }
-  d += "L100,60 Z";
-  return (
-    <div style={{
-      width: '100%',
-      height: '60px',
-      position: 'absolute',
-      top: '-59px',
-      left: 0,
-      zIndex: 10,
-      pointerEvents: 'none'
-    }}>
-      <svg width="100%" height="60" viewBox="0 0 100 60" preserveAspectRatio="none" style={{ display: 'block' }}>
-        <path d={d} fill={color} />
-      </svg>
-    </div>
-  );
-};
-
-const Repetition3DText = ({ text, color }: { text: string, color: string }) => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [fontSize, setFontSize] = useState('6rem');
-  const [screenWidth, setScreenWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
-  const [letterSpacing, setLetterSpacing] = useState('8px');
-  const [movementFactor, setMovementFactor] = useState(10);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setScreenWidth(width);
-
-      // Calculate responsive font size based on screen width
-      let newSize;
-      if (width < 480) {
-        newSize = '2.5rem'; // Smaller screens
-      } else if (width < 768) {
-        newSize = '3.5rem'; // Tablets
-      } else if (width < 1200) {
-        newSize = '5rem'; // Medium screens
-      } else {
-        newSize = '6rem'; // Large screens
-      }
-
-      setFontSize(newSize);
-      setLetterSpacing(width < 768 ? '4px' : '8px');
-      setMovementFactor(width < 768 ? 5 : 10);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse position from -1 to 1
-      setMousePos({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1
-      });
-    };
-
-    // Set initial values
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  return (
-    <div style={{
-      position: 'relative',
-      fontSize: fontSize,
-      fontWeight: '900',
-      textTransform: 'uppercase',
-      letterSpacing: letterSpacing,
-      lineHeight: 1,
-      textAlign: 'center',
-      maxWidth: '100%',
-      overflow: 'visible',
-      marginBottom: '7rem'
-    }}>
-      {[...Array(8)].map((_, i) => (
-        <span
-          key={i}
-          style={{
-            position: i === 0 ? 'relative' : 'absolute',
-            top: 0,
-            left: '50%',
-            transform: `translate(calc(-50% + ${i * mousePos.x * movementFactor}px), ${i * mousePos.y * movementFactor}px) scale(${1 - i * 0.02})`,
-            zIndex: 10 - i,
-            color: i === 0 ? color : 'transparent',
-            WebkitTextStroke: `1px ${color}`,
-            whiteSpace: 'nowrap',
-            display: 'block',
-            transition: 'transform 0.1s ease-out',
-            opacity: 1 - i * 0.1,
-            maxWidth: '100%',
-            overflow: 'visible'
-          }}
-        >
-          {text}
-        </span>
-      ))}
-    </div>
-  );
-};
-
-const ResponsiveText = ({ children, className = '', style = {}, variant = 'normal' }: { children: React.ReactNode, className?: string, style?: React.CSSProperties, variant?: 'normal' | 'large' | 'small' }) => {
-  const baseClass = 'responsive-text';
-  const variantClass = variant === 'large' ? 'responsive-text-large' :
-    variant === 'small' ? 'responsive-text-small' : '';
-
-  return (
-    <div
-      className={`${baseClass} ${variantClass} ${className}`}
-      style={{
-        fontSize: variant === 'large' ? 'clamp(1.2rem, 3vw, 1.8rem)' :
-          variant === 'small' ? 'clamp(0.8rem, 2vw, 1.1rem)' :
-            'clamp(1rem, 2.5vw, 1.4rem)',
-        lineHeight: '1.6',
-        boxSizing: 'border-box',
-        textAlign: 'justify',
-        width: '100%',
-        ...style
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Enhanced animated text component with multiple animation types
-const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', delay = 0, style = {} }: {
-  text: string,
-  className?: string,
-  animationType?: 'fade-sequence' | 'pulse-animation' | 'bounce-animation' | 'flip-animation' | 'wave-effect',
-  delay?: number,
-  style?: React.CSSProperties
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const textRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        },
-        { threshold: 0.1 }
-      );
-
-      if (textRef.current) {
-        observer.observe(textRef.current);
-      }
-
-      return () => {
-        if (textRef.current) {
-          observer.unobserve(textRef.current);
-        }
-      };
-    }, delay);
-
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <div
-      ref={textRef}
-      className={`animated-text ${animationType} ${className}`}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
-        maxWidth: '100%',
-        boxSizing: 'border-box',
-        textAlign: 'inherit',
-        ...style
-      }}
-    >
-      {text.split(' ').map((word, wordIndex, wordsArray) => {
-        const wordStartIndex = wordsArray.slice(0, wordIndex).join(' ').length + (wordIndex > 0 ? 1 : 0);
-        
-        return (
-          <React.Fragment key={wordIndex}>
-            <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-              {word.split('').map((char, charIndex) => (
-                <span
-                  key={wordStartIndex + charIndex}
-                  className={`char-${wordStartIndex + charIndex}`}
-                  style={{
-                    display: 'inline-block',
-                    transition: 'transform 0.2s ease-out',
-                  }}
-                >
-                  {char}
-                </span>
-              ))}
-            </span>
-            {wordIndex < wordsArray.length - 1 && ' '}
-          </React.Fragment>
-        );
-      })}
-    </div>
-  );
-};
 
 export default function Page() {
 
@@ -280,7 +45,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!isFontLoaded) return;
-    
+
     const target = "Ulysse Mercadal";
     let i = 0;
     const interval = setInterval(() => {
@@ -332,13 +97,13 @@ export default function Page() {
     const { screenWidth, screenHeight } = contextRef.current;
     const fontSizeMultiplier = 1;
     const letterSpacing = -10;
-    const sizeScale = scaleLinear().domain([320, 768, 2560]).clamp(true).range([40, 100, 250]);
+    const sizeScale = scaleLinear().domain([320, 768, 2560]).clamp(true).range([30, 70, 250]); // Reduced middle value from 100 to 70 for tablets
     const calculatedSize = sizeScale(screenWidth);
     const realFontSize = calculatedSize * fontSizeMultiplier;
     setFontSize(realFontSize);
 
     const fontScale = 1 / font.unitsPerEm * realFontSize;
-    
+
     const getWidth = (str: string) => {
       const glyphs = font.stringToGlyphs(str);
       let width = 0;
@@ -356,15 +121,15 @@ export default function Page() {
     const prefixWidthValue = getWidth(prefix);
     const messageWidth = getWidth(message);
     const totalWidth = prefixWidthValue + messageWidth;
-    
+
     setTextWidth(messageWidth);
     setPrefixWidth(prefixWidthValue);
-    
+
     let x = (screenWidth - totalWidth) / 2;
     const y = screenHeight / 2;
-    
+
     contextRef.current.project.activate();
-    
+
     // Draw prefix (static)
     const prefixGlyphs = font.stringToGlyphs(prefix);
     prefixGlyphs.forEach((glyphData, i) => {
@@ -451,12 +216,13 @@ export default function Page() {
 
   return (
     <div style={{
-      width: '100vw',
+      width: '100%',
       minHeight: '100vh',
       backgroundColor: backgroundMode === 'white' ? '#ffffff' : '#000000',
       color: backgroundMode === 'white' ? '#000000' : '#ffffff',
       position: 'relative',
-      fontFamily: 'serif'
+      fontFamily: 'serif',
+      boxSizing: 'border-box'
     }}>
       <header style={{
         position: 'fixed',
@@ -505,7 +271,7 @@ export default function Page() {
           {backgroundMode === 'white' ? <Moon size={20} /> : <Sun size={20} />}
         </button>
       </header>
-      <section style={{ height: '120vh', width: '100vw', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ height: '120vh', width: '100%', position: 'relative', overflow: 'hidden', boxSizing: 'border-box' }}>
         {!isFontLoaded && (
           <div style={{
             position: 'absolute',
@@ -577,8 +343,8 @@ export default function Page() {
                     border: 'none',
                     outline: 'none',
                     backgroundColor: 'transparent',
-                    color: 'transparent', 
-                    caretColor: 'transparent', 
+                    color: 'transparent',
+                    caretColor: 'transparent',
                     fontFamily: "'Nanum Myeongjo', serif",
                     padding: 0,
                     margin: 0,
@@ -586,15 +352,13 @@ export default function Page() {
                 />
               )}
             </div>
-
-            {/* Custom cursor (vertical bar) */}
             {isEditing && (
               <div
                 style={{
                   position: 'absolute',
                   left: `${textWidth}px`,
-                  bottom: '0', // Align to the baseline
-                  transform: 'translateY(15%)', // Slight adjustment for baseline offset
+                  bottom: '0',
+                  transform: 'translateY(15%)',
                   marginLeft: '4px',
                   zIndex: 20,
                   pointerEvents: 'none'
@@ -615,18 +379,16 @@ export default function Page() {
       </section>
       <section id="about" style={{
         minHeight: '100vh',
-        width: '100vw',
+        width: '100%',
         position: 'relative',
         backgroundColor: backgroundMode === 'white' ? '#000000' : '#ffffff',
         color: backgroundMode === 'white' ? '#ffffff' : '#000000',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '100px 20px',
+        padding: '100px 20px 10rem 20px', // Added 10rem bottom padding
         margin: 0,
-        paddingLeft: 0,
-        paddingRight: 0
+        boxSizing: 'border-box',
       }}>
         <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
         <Repetition3DText
@@ -642,7 +404,7 @@ export default function Page() {
           margin: 0,
           marginLeft: 'auto',
           marginRight: 'auto',
-          marginBottom: "2rem"
+          marginBottom: "20rem"
         }}>
           <div style={{ position: 'relative', width: '100%', padding: '0', marginBottom: '40px' }}>
             <div style={{
@@ -660,7 +422,7 @@ export default function Page() {
             }} />
             <div style={{
               position: 'absolute',
-              marginLeft:-5,
+              marginLeft: -5,
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
@@ -673,7 +435,7 @@ export default function Page() {
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="As a computer science student at Epitech Lyon, I thrive within a project-based pedagogy which has given me strong capacities for adaptation and autonomy."
+              text="As a computer science student at Epitech Lyon, I thrive in a project-based learning environment that has fostered my adaptability and autonomy."
               style={{ position: 'relative', zIndex: 1 }}
               animationType="fade-sequence"
               delay={100}
@@ -686,8 +448,8 @@ export default function Page() {
               bottom: 0,
               left: '-20vw',
               right: '-20vw',
-              borderTop: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
-              borderBottom: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
+              borderTop: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
+              borderBottom: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
               maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)',
               WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)',
               opacity: 0.4,
@@ -698,18 +460,17 @@ export default function Page() {
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
-              marginLeft:-5,
-
+              marginLeft: -5,
               right: 0,
-              borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
-              borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
+              borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
+              borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
               maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
               WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
               opacity: 0.4,
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="My expertise extends from graphical programming (OpenGL, Vulkan) and low-level development (Zig, C) to the modern Web ecosystem (NestJS, Next.js... and a lot more !), and even mobile development (Flutter, React Native)."
+              text="My expertise spans graphical programming (OpenGL, Vulkan), low-level development (Zig, C), the modern Web ecosystem (NestJS, Next.js... and much more!), and mobile development (Flutter, React Native)."
               style={{ position: 'relative', zIndex: 1 }}
               animationType="pulse-animation"
               delay={300}
@@ -735,7 +496,7 @@ export default function Page() {
               bottom: '-10vh',
               left: 0,
               right: 0,
-              marginLeft:-5,
+              marginLeft: -5,
 
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
@@ -755,78 +516,86 @@ export default function Page() {
       </section>
       <section id="projects" style={{
         minHeight: '100vh',
-        width: '100vw',
+        width: '100%',
         position: 'relative',
         backgroundColor: backgroundMode === 'white' ? '#ffffff' : '#000000',
         color: backgroundMode === 'white' ? '#000000' : '#ffffff',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
         padding: '100px 20px',
         margin: 0,
-        paddingLeft: 0,
-        paddingRight: 0
+        boxSizing: 'border-box'
       }}>
-        <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
+        <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'}/>
         <Repetition3DText
           text="Projects"
           color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
-        <ResponsiveText style={{
-          maxWidth: 'min(800px, 90vw)',
-          textAlign: 'center',
-          marginTop: '250px', // Augmentation de la marge
-          wordWrap: 'break-word',
-          overflowWrap: 'break-word',
-          margin: 0,
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }} variant="large">
-          <AnimatedText
-            text="Explore my latest works and creative experiments."
-            style={{ display: 'inline-block' }}
-            animationType="bounce-animation"
-            delay={200}
+
+        <div style={{
+          width: '100%',
+          maxWidth: '800px',
+          marginTop: '4rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '3rem',
+          padding: '0 20px',
+          margin: '4rem auto 2rem auto',
+          boxSizing: 'border-box',
+          marginBottom: "20rem"
+
+        }}>
+          <ProjectCard
+            title="R-TYPE"
+            description="A networked 3D version of the famous R-Type space shooter, built with a custom engine and featuring a highly optimized, flexible TCP/UDP network protocol designed for any game type. The project is fully Windows and linux compatible thanks to a robust cross-compilation pipeline. (macos is not supported because of opengl)"
+            technologies={['C++', 'OpenGL', 'CMake', 'Asio']}
+            duration="6 weeks"
+            teamSize={4}
+            githubUrl="https://github.com/nicolasnny/R-TYPE"
+            backgroundMode={backgroundMode as 'white' | 'black'}
           />
-        </ResponsiveText>
+          <ProjectCard
+            title="AREA"
+            description="A workflow automation tool for web and mobile featuring a custom-built workflow editor that handles complex node interactions. We re-implemented a system similar to n8n, including conditional nodes and seamless integration between 6+ online services via OAuth, all within a microservice architecture."
+            technologies={['Next.js', 'NestJS', 'PostgreSQL', 'Prisma', 'React', 'Flutter', 'Docker']}
+            duration="5 weeks"
+            teamSize={5}
+            githubUrl="https://github.com/ulysse-mercadal/area"
+            backgroundMode={backgroundMode as 'white' | 'black'}
+          />
+          <ProjectCard
+            title="Raytracer"
+            description="A high-performance Raytracer engine developed in C++ only four months after discovering the language. It features advanced optical effects like transparency, reflection, diffraction, and refraction, alongside drop shadows and numerous primitives, all implemented using modern C++ design patterns."
+            technologies={['C++']}
+            duration="4 weeks"
+            teamSize={3}
+            githubUrl="https://github.com/ulysse-mercadal/raytracer"
+            backgroundMode={backgroundMode as 'white' | 'black'}
+          />
+        </div>
       </section>
       <section id="experiences" style={{
         minHeight: '100vh',
-        width: '100vw',
+        width: '100%',
         position: 'relative',
         backgroundColor: backgroundMode === 'white' ? '#000000' : '#ffffff',
         color: backgroundMode === 'white' ? '#ffffff' : '#000000',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
         padding: '100px 20px',
         margin: 0,
-        paddingLeft: 0,
-        paddingRight: 0
+        boxSizing: 'border-box'
       }}>
         <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
         <Repetition3DText
           text="Experiences"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'}
         />
-        <ResponsiveText style={{
-          maxWidth: 'min(800px, 90vw)',
-          textAlign: 'center',
-          marginTop: '250px', // Augmentation de la marge
-          wordWrap: 'break-word',
-          overflowWrap: 'break-word',
-          margin: 0,
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }} variant="large">
-          <AnimatedText
-            text="My journey through different roles and challenges."
-            style={{ display: 'inline-block' }}
-            animationType="flip-animation"
-            delay={200}
-          />
-        </ResponsiveText>
+        <div style={{ marginTop: '4rem', width: '100%' }}>
+          <ResumeTimeline backgroundMode={backgroundMode as 'white' | 'black'} />
+        </div>
       </section>
     </div>
   );
