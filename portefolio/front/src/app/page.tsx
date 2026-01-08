@@ -176,9 +176,8 @@ const ResponsiveText = ({ children, className = '', style = {}, variant = 'norma
             'clamp(1rem, 2.5vw, 1.4rem)',
         lineHeight: '1.6',
         boxSizing: 'border-box',
-        wordWrap: 'break-word',
-        overflowWrap: 'break-word',
-        hyphens: 'auto',
+        textAlign: 'justify',
+        width: '100%',
         ...style
       }}
     >
@@ -226,33 +225,40 @@ const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', d
   return (
     <div
       ref={textRef}
-      className={`animated-text ${animationType} ${className} text-no-overflow`}
+      className={`animated-text ${animationType} ${className}`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
         transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
         maxWidth: '100%',
-        overflowWrap: 'break-word',
-        wordWrap: 'break-word',
-        hyphens: 'auto',
         boxSizing: 'border-box',
+        textAlign: 'inherit',
         ...style
       }}
     >
-      {text.split('').map((char, index) => (
-        <span
-          key={index}
-          className={`char-${index}`}
-          style={{
-            display: 'inline-block',
-            transition: 'transform 0.2s ease-out',
-            maxWidth: '100%',
-            overflow: 'hidden'
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
-      ))}
+      {text.split(' ').map((word, wordIndex, wordsArray) => {
+        const wordStartIndex = wordsArray.slice(0, wordIndex).join(' ').length + (wordIndex > 0 ? 1 : 0);
+        
+        return (
+          <React.Fragment key={wordIndex}>
+            <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+              {word.split('').map((char, charIndex) => (
+                <span
+                  key={wordStartIndex + charIndex}
+                  className={`char-${wordStartIndex + charIndex}`}
+                  style={{
+                    display: 'inline-block',
+                    transition: 'transform 0.2s ease-out',
+                  }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+            {wordIndex < wordsArray.length - 1 && ' '}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };
@@ -633,8 +639,6 @@ export default function Page() {
           position: 'relative',
           lineHeight: '1.3',
           letterSpacing: '0.5px',
-          wordWrap: 'break-word',
-          overflowWrap: 'break-word',
           margin: 0,
           marginLeft: 'auto',
           marginRight: 'auto',
