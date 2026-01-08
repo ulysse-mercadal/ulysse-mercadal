@@ -1,0 +1,137 @@
+/* CSS Animations for the editable text */
+
+.animated-text {
+  /* Base styles for all animations */
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Cascade Down Animation */
+@keyframes cascadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cascade-down .char-0 { animation: cascadeDown 0.5s 0.0s forwards; }
+.cascade-down .char-1 { animation: cascadeDown 0.5s 0.05s forwards; }
+.cascade-down .char-2 { animation: cascadeDown 0.5s 0.1s forwards; }
+.cascade-down .char-3 { animation: cascadeDown 0.5s 0.15s forwards; }
+.cascade-down .char-4 { animation: cascadeDown 0.5s 0.2s forwards; }
+.cascade-down .char-5 { animation: cascadeDown 0.5s 0.25s forwards; }
+.cascade-down .char-6 { animation: cascadeDown 0.5s 0.3s forwards; }
+.cascade-down .char-7 { animation: cascadeDown 0.5s 0.35s forwards; }
+.cascade-down .char-8 { animation: cascadeDown 0.5s 0.4s forwards; }
+.cascade-down .char-9 { animation: cascadeDown 0.5s 0.45s forwards; }
+.cascade-down .char-10 { animation: cascadeDown 0.5s 0.5s forwards; }
+.cascade-down .char-11 { animation: cascadeDown 0.5s 0.55s forwards; }
+.cascade-down .char-12 { animation: cascadeDown 0.5s 0.6s forwards; }
+.cascade-down .char-13 { animation: cascadeDown 0.5s 0.65s forwards; }
+.cascade-down .char-14 { animation: cascadeDown 0.5s 0.7s forwards; }
+
+/* Cascade Up Animation */
+@keyframes cascadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cascade-up .char-0 { animation: cascadeUp 0.5s 0.0s forwards; }
+.cascade-up .char-1 { animation: cascadeUp 0.5s 0.05s forwards; }
+.cascade-up .char-2 { animation: cascadeUp 0.5s 0.1s forwards; }
+.cascade-up .char-3 { animation: cascadeUp 0.5s 0.15s forwards; }
+.cascade-up .char-4 { animation: cascadeUp 0.5s 0.2s forwards; }
+.cascade-up .char-5 { animation: cascadeUp 0.5s 0.25s forwards; }
+.cascade-up .char-6 { animation: cascadeUp 0.5s 0.3s forwards; }
+.cascade-up .char-7 { animation: cascadeUp 0.5s 0.35s forwards; }
+.cascade-up .char-8 { animation: cascadeUp 0.5s 0.4s forwards; }
+.cascade-up .char-9 { animation: cascadeUp 0.5s 0.45s forwards; }
+.cascade-up .char-10 { animation: cascadeUp 0.5s 0.5s forwards; }
+.cascade-up .char-11 { animation: cascadeUp 0.5s 0.55s forwards; }
+.cascade-up .char-12 { animation: cascadeUp 0.5s 0.6s forwards; }
+.cascade-up .char-13 { animation: cascadeUp 0.5s 0.65s forwards; }
+.cascade-up .char-14 { animation: cascadeUp 0.5s 0.7s forwards; }
+
+/* Wave Effect Animation */
+@keyframes waveEffect {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  75% {
+    transform: translateY(5px);
+  }
+}
+
+.wave-effect .char-0 { animation: waveEffect 2s 0.0s infinite ease-in-out; }
+.wave-effect .char-1 { animation: waveEffect 2s 0.2s infinite ease-in-out; }
+.wave-effect .char-2 { animation: waveEffect 2s 0.4s infinite ease-in-out; }
+.wave-effect .char-3 { animation: waveEffect 2s 0.6s infinite ease-in-out; }
+.wave-effect .char-4 { animation: waveEffect 2s 0.8s infinite ease-in-out; }
+.wave-effect .char-5 { animation: waveEffect 2s 1.0s infinite ease-in-out; }
+.wave-effect .char-6 { animation: waveEffect 2s 1.2s infinite ease-in-out; }
+.wave-effect .char-7 { animation: waveEffect 2s 1.4s infinite ease-in-out; }
+.wave-effect .char-8 { animation: waveEffect 2s 1.6s infinite ease-in-out; }
+.wave-effect .char-9 { animation: waveEffect 2s 1.8s infinite ease-in-out; }
+.wave-effect .char-10 { animation: waveEffect 2s 2.0s infinite ease-in-out; }
+.wave-effect .char-11 { animation: waveEffect 2s 2.2s infinite ease-in-out; }
+.wave-effect .char-12 { animation: waveEffect 2s 2.4s infinite ease-in-out; }
+.wave-effect .char-13 { animation: waveEffect 2s 2.6s infinite ease-in-out; }
+.wave-effect .char-14 { animation: waveEffect 2s 2.8s infinite ease-in-out; }
+
+/* Fade In Sequence Animation */
+
+@keyframes fadeInSequence {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-sequence .char-0 { animation: fadeInSequence 0.5s 0.0s forwards; }
+.fade-sequence .char-1 { animation: fadeInSequence 0.5s 0.05s forwards; }
+.fade-sequence .char-2 { animation: fadeInSequence 0.5s 0.1s forwards; }
+.fade-sequence .char-3 { animation: fadeInSequence 0.5s 0.15s forwards; }
+.fade-sequence .char-4 { animation: fadeInSequence 0.5s 0.2s forwards; }
+.fade-sequence .char-5 { animation: fadeInSequence 0.5s 0.25s forwards; }
+.fade-sequence .char-6 { animation: fadeInSequence 0.5s 0.3s forwards; }
+.fade-sequence .char-7 { animation: fadeInSequence 0.5s 0.35s forwards; }
+.fade-sequence .char-8 { animation: fadeInSequence 0.5s 0.4s forwards; }
+.fade-sequence .char-9 { animation: fadeInSequence 0.5s 0.45s forwards; }
+.fade-sequence .char-10 { animation: fadeInSequence 0.5s 0.5s forwards; }
+.fade-sequence .char-11 { animation: fadeInSequence 0.5s 0.55s forwards; }
+.fade-sequence .char-12 { animation: fadeInSequence 0.5s 0.6s forwards; }
+.fade-sequence .char-13 { animation: fadeInSequence 0.5s 0.65s forwards; }
+.fade-sequence .char-14 { animation: fadeInSequence 0.5s 0.7s forwards; }
+
+
+/* Vertical Bar Animation */
+
+@keyframes verticalBarEffect {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.2);
+  }
+}
+
+
+.vertical-bar {
+  animation: verticalBarEffect 1.5s infinite ease-in-out;
+  transform-origin: center;
+}

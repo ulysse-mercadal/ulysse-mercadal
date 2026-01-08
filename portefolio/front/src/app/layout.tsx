@@ -1,11 +1,9 @@
 import React from 'react';
-import "../stylesheets/style_black.scss";
-import "../stylesheets/style_white.scss";
-import { Providers } from './providers';
+import "./globals.css";
 
 export const metadata = {
-  title: 'Google Fonts + Korean',
-  description: 'Google Fonts + Korean Project',
+  title: 'Ulysse Mercadal',
+  description: 'Ulysse Mercadal Portfolio',
 };
 
 export default function RootLayout({
@@ -19,9 +17,7 @@ export default function RootLayout({
         <link id="favicon" rel="shortcut icon" href="/assets/favicon_0.png" />
       </head>
       <body>
-        <Providers>
           {children}
-        </Providers>
       </body>
     </html>
   );
