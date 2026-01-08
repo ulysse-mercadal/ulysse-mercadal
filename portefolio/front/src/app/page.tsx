@@ -42,59 +42,191 @@ const ZigZagDivider = ({ color }: { color: string }) => {
         <path d={d} fill={color} />
       </svg>
     </div>
-    );
-  };
+  );
+};
 
-  const Repetition3DText = ({ text, color }: { text: string, color: string }) => {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+const Repetition3DText = ({ text, color }: { text: string, color: string }) => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [fontSize, setFontSize] = useState('6rem');
+  const [screenWidth, setScreenWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [letterSpacing, setLetterSpacing] = useState('8px');
+  const [movementFactor, setMovementFactor] = useState(10);
 
-    useEffect(() => {
-      const handleMouseMove = (e: MouseEvent) => {
-        // Normalize mouse position from -1 to 1
-        setMousePos({
-          x: (e.clientX / window.innerWidth) * 2 - 1,
-          y: (e.clientY / window.innerHeight) * 2 - 1
-        });
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setScreenWidth(width);
+
+      // Calculate responsive font size based on screen width
+      let newSize;
+      if (width < 480) {
+        newSize = '2.5rem'; // Smaller screens
+      } else if (width < 768) {
+        newSize = '3.5rem'; // Tablets
+      } else if (width < 1200) {
+        newSize = '5rem'; // Medium screens
+      } else {
+        newSize = '6rem'; // Large screens
+      }
+
+      setFontSize(newSize);
+      setLetterSpacing(width < 768 ? '4px' : '8px');
+      setMovementFactor(width < 768 ? 5 : 10);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Normalize mouse position from -1 to 1
+      setMousePos({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: (e.clientY / window.innerHeight) * 2 - 1
+      });
+    };
+
+    // Set initial values
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  return (
+    <div style={{
+      position: 'relative',
+      fontSize: fontSize,
+      fontWeight: '900',
+      textTransform: 'uppercase',
+      letterSpacing: letterSpacing,
+      lineHeight: 1,
+      textAlign: 'center',
+      maxWidth: '100%',
+      overflow: 'visible',
+      marginBottom: '7rem'
+    }}>
+      {[...Array(8)].map((_, i) => (
+        <span
+          key={i}
+          style={{
+            position: i === 0 ? 'relative' : 'absolute',
+            top: 0,
+            left: '50%',
+            transform: `translate(calc(-50% + ${i * mousePos.x * movementFactor}px), ${i * mousePos.y * movementFactor}px) scale(${1 - i * 0.02})`,
+            zIndex: 10 - i,
+            color: i === 0 ? color : 'transparent',
+            WebkitTextStroke: `1px ${color}`,
+            whiteSpace: 'nowrap',
+            display: 'block',
+            transition: 'transform 0.1s ease-out',
+            opacity: 1 - i * 0.1,
+            maxWidth: '100%',
+            overflow: 'visible'
+          }}
+        >
+          {text}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const ResponsiveText = ({ children, className = '', style = {}, variant = 'normal' }: { children: React.ReactNode, className?: string, style?: React.CSSProperties, variant?: 'normal' | 'large' | 'small' }) => {
+  const baseClass = 'responsive-text';
+  const variantClass = variant === 'large' ? 'responsive-text-large' :
+    variant === 'small' ? 'responsive-text-small' : '';
+
+  return (
+    <div
+      className={`${baseClass} ${variantClass} ${className}`}
+      style={{
+        fontSize: variant === 'large' ? 'clamp(1.2rem, 3vw, 1.8rem)' :
+          variant === 'small' ? 'clamp(0.8rem, 2vw, 1.1rem)' :
+            'clamp(1rem, 2.5vw, 1.4rem)',
+        lineHeight: '1.6',
+        boxSizing: 'border-box',
+        wordWrap: 'break-word',
+        overflowWrap: 'break-word',
+        hyphens: 'auto',
+        ...style
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+// Enhanced animated text component with multiple animation types
+const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', delay = 0 }: {
+  text: string,
+  className?: string,
+  animationType?: 'fade-sequence' | 'pulse-animation' | 'bounce-animation' | 'flip-animation' | 'wave-effect',
+  delay?: number
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (textRef.current) {
+        observer.observe(textRef.current);
+      }
+
+      return () => {
+        if (textRef.current) {
+          observer.unobserve(textRef.current);
+        }
       };
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, delay);
 
-    return (
-      <div style={{
-        position: 'relative',
-        fontSize: '6rem',
-        fontWeight: '900',
-        textTransform: 'uppercase',
-        letterSpacing: '8px',
-        lineHeight: 1,
-        textAlign: 'center'
-      }}>
-        {[...Array(8)].map((_, i) => (
-          <span
-            key={i}
-            style={{
-              position: i === 0 ? 'relative' : 'absolute',
-              top: 0,
-              left: '50%',
-              transform: `translate(calc(-50% + ${i * mousePos.x * 10}px), ${i * mousePos.y * 10}px) scale(${1 - i * 0.02})`,
-              zIndex: 10 - i,
-              color: i === 0 ? color : 'transparent',
-              WebkitTextStroke: `1px ${color}`,
-              whiteSpace: 'nowrap',
-              display: 'block',
-              transition: 'transform 0.1s ease-out',
-              opacity: 1 - i * 0.1
-            }}
-          >
-            {text}
-          </span>
-        ))}
-      </div>
-    );
-  };
+    return () => clearTimeout(timer);
+  }, [delay]);
 
-  export default function Page() {
+  return (
+    <div
+      ref={textRef}
+      className={`animated-text ${animationType} ${className} text-no-overflow`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+        maxWidth: '100%',
+        overflowWrap: 'break-word',
+        wordWrap: 'break-word',
+        hyphens: 'auto',
+        boxSizing: 'border-box'
+      }}
+    >
+      {text.split('').map((char, index) => (
+        <span
+          key={index}
+          className={`char-${index}`}
+          style={{
+            display: 'inline-block',
+            transition: 'transform 0.2s ease-out',
+            maxWidth: '100%',
+            overflow: 'hidden'
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+export default function Page() {
 
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -372,20 +504,28 @@ const ZigZagDivider = ({ color }: { color: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '100px 20px'
+        padding: '100px 20px',
+        margin: 0,
+        paddingLeft: 0,
+        paddingRight: 0
       }}>
         <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
         <Repetition3DText
           text="About"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
-        <div style={{
-          maxWidth: '800px',
+        <ResponsiveText style={{
+          maxWidth: 'min(800px, 90vw)',
           textAlign: 'justify',
-          fontSize: '1.4rem',
-          marginTop: '200px',
-          lineHeight: '1',
+          marginTop: '4rem',
+          position: 'relative',
+          lineHeight: '1.3',
           letterSpacing: '0.5px',
-          position: 'relative'
+          wordWrap: 'break-word',
+          overflowWrap: 'break-word',
+          margin: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginBottom: "2rem"
         }}>
           <div style={{ position: 'relative', width: '100%', padding: '0', marginBottom: '40px' }}>
             <div style={{
@@ -403,6 +543,7 @@ const ZigZagDivider = ({ color }: { color: string }) => {
             }} />
             <div style={{
               position: 'absolute',
+              marginLeft:-5,
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
@@ -414,9 +555,12 @@ const ZigZagDivider = ({ color }: { color: string }) => {
               opacity: 0.4,
               pointerEvents: 'none'
             }} />
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              As a computer science student at Epitech Lyon, I thrive within a project-based pedagogy which has given me strong capacities for adaptation and autonomy.
-            </div>
+            <AnimatedText
+              text="As a computer science student at Epitech Lyon, I thrive within a project-based pedagogy which has given me strong capacities for adaptation and autonomy."
+              style={{ position: 'relative', zIndex: 1 }}
+              animationType="fade-sequence"
+              delay={100}
+            />
           </div>
           <div style={{ position: 'relative', width: '100%', padding: '0', marginBottom: '40px' }}>
             <div style={{
@@ -437,6 +581,8 @@ const ZigZagDivider = ({ color }: { color: string }) => {
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
+              marginLeft:-5,
+
               right: 0,
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
@@ -445,9 +591,12 @@ const ZigZagDivider = ({ color }: { color: string }) => {
               opacity: 0.4,
               pointerEvents: 'none'
             }} />
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              My expertise extends from graphical programming (OpenGL, Vulkan) and low-level development (Zig, C) to the modern Web ecosystem (NestJS, Next.js... and a lot more !), and even mobile development (Flutter, React Native).
-            </div>
+            <AnimatedText
+              text="My expertise extends from graphical programming (OpenGL, Vulkan) and low-level development (Zig, C) to the modern Web ecosystem (NestJS, Next.js... and a lot more !), and even mobile development (Flutter, React Native)."
+              style={{ position: 'relative', zIndex: 1 }}
+              animationType="pulse-animation"
+              delay={300}
+            />
           </div>
           <div style={{ position: 'relative', width: '100%', padding: '0' }}>
             <div style={{
@@ -469,6 +618,8 @@ const ZigZagDivider = ({ color }: { color: string }) => {
               bottom: '-10vh',
               left: 0,
               right: 0,
+              marginLeft:-5,
+
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
@@ -476,11 +627,14 @@ const ZigZagDivider = ({ color }: { color: string }) => {
               opacity: 0.4,
               pointerEvents: 'none'
             }} />
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              I am particularly passionate about designing complex back-end logic and constantly pushing my own boundaries.
-            </div>
+            <AnimatedText
+              text="I am particularly passionate about designing complex back-end logic and constantly pushing my own boundaries."
+              style={{ position: 'relative', zIndex: 1 }}
+              animationType="wave-effect"
+              delay={500}
+            />
           </div>
-        </div>
+        </ResponsiveText>
       </section>
       <section id="projects" style={{
         minHeight: '100vh',
@@ -492,15 +646,32 @@ const ZigZagDivider = ({ color }: { color: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '100px 20px'
+        padding: '100px 20px',
+        margin: 0,
+        paddingLeft: 0,
+        paddingRight: 0
       }}>
         <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
         <Repetition3DText
           text="Projects"
           color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
-        <div style={{ maxWidth: '800px', textAlign: 'center', fontSize: '1.2rem', marginTop: '60px' }}>
-          Explore my latest works and creative experiments.
-        </div>
+        <ResponsiveText style={{
+          maxWidth: 'min(800px, 90vw)',
+          textAlign: 'center',
+          marginTop: '250px', // Augmentation de la marge
+          wordWrap: 'break-word',
+          overflowWrap: 'break-word',
+          margin: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }} variant="large">
+          <AnimatedText
+            text="Explore my latest works and creative experiments."
+            style={{ display: 'inline-block' }}
+            animationType="bounce-animation"
+            delay={200}
+          />
+        </ResponsiveText>
       </section>
       <section id="experiences" style={{
         minHeight: '100vh',
@@ -512,16 +683,33 @@ const ZigZagDivider = ({ color }: { color: string }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '100px 20px'
+        padding: '100px 20px',
+        margin: 0,
+        paddingLeft: 0,
+        paddingRight: 0
       }}>
         <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
         <Repetition3DText
           text="Experiences"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'}
         />
-        <div style={{ maxWidth: '800px', textAlign: 'center', fontSize: '1.2rem', marginTop: '60px' }}>
-          My journey through different roles and challenges.
-        </div>
+        <ResponsiveText style={{
+          maxWidth: 'min(800px, 90vw)',
+          textAlign: 'center',
+          marginTop: '250px', // Augmentation de la marge
+          wordWrap: 'break-word',
+          overflowWrap: 'break-word',
+          margin: 0,
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }} variant="large">
+          <AnimatedText
+            text="My journey through different roles and challenges."
+            style={{ display: 'inline-block' }}
+            animationType="flip-animation"
+            delay={200}
+          />
+        </ResponsiveText>
       </section>
     </div>
   );
