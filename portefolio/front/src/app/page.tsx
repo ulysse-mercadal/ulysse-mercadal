@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import paper from 'paper';
 import opentype from 'opentype.js';
 import _ from 'lodash';
@@ -20,8 +20,37 @@ const ANIMATIONS = [
 const FONT_URL = "https://fonts.gstatic.com/s/nanummyeongjo/v6/9Bty3DZF0dXLMZlywRbVRNhxy2pLVGA5r_c.woff";
 
 const ZigZagDivider = ({ color }: { color: string }) => {
+  const [points, setPoints] = useState(40); // Default value
+
+  useEffect(() => {
+    // Calculate number of points based on container width to maintain consistent tooth size
+    const calculatePoints = () => {
+      // Get the container width
+      const containerWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      // Maintain a consistent tooth width (in pixels)
+      const toothWidth = 25; // Each tooth will be approximately 25px wide
+      // Calculate number of points based on container width
+      const calculatedPoints = Math.max(10, Math.floor(containerWidth / toothWidth));
+      return calculatedPoints;
+    };
+
+    // Set initial points
+    setPoints(calculatePoints());
+
+    // Update points on window resize
+    const handleResize = () => {
+      setPoints(calculatePoints());
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   let d = "M0,60 ";
-  const points = 40;
   for (let i = 0; i <= points; i++) {
     const x = (i * 100) / points;
     const y = i % 2 === 0 ? 60 : 0;
@@ -159,11 +188,12 @@ const ResponsiveText = ({ children, className = '', style = {}, variant = 'norma
 };
 
 // Enhanced animated text component with multiple animation types
-const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', delay = 0 }: {
+const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', delay = 0, style = {} }: {
   text: string,
   className?: string,
   animationType?: 'fade-sequence' | 'pulse-animation' | 'bounce-animation' | 'flip-animation' | 'wave-effect',
-  delay?: number
+  delay?: number,
+  style?: React.CSSProperties
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
@@ -205,7 +235,8 @@ const AnimatedText = ({ text, className = '', animationType = 'fade-sequence', d
         overflowWrap: 'break-word',
         wordWrap: 'break-word',
         hyphens: 'auto',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        ...style
       }}
     >
       {text.split('').map((char, index) => (
@@ -234,11 +265,29 @@ export default function Page() {
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [font, setFont] = useState<opentype.Font | null>(null);
   const [backgroundMode, setBackgroundMode] = useState('black');
-  const [message, setMessage] = useState<string>("Ulysse Mercadal");
+  const [message, setMessage] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editingText, setEditingText] = useState<string>("Ulysse Mercadal");
   const [textWidth, setTextWidth] = useState<number>(0);
+  const [prefixWidth, setPrefixWidth] = useState<number>(0);
   const [fontSize, setFontSize] = useState<number>(0);
+
+  useEffect(() => {
+    if (!isFontLoaded) return;
+    
+    const target = "Ulysse Mercadal";
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i <= target.length) {
+        setMessage(target.substring(0, i));
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [isFontLoaded]);
   const contextRef = useRef<any>({
     glyphs: [],
     project: null,
@@ -251,6 +300,106 @@ export default function Page() {
       backgroundMode: 'white'
     }
   });
+
+  const attachAnimation = useCallback((index: number) => {
+    const animation = ANIMATIONS[index].animation;
+    if (animation && animation.attach)
+      animation.attach(contextRef.current, backgroundMode);
+  }, [backgroundMode]);
+
+  const detachAnimation = useCallback((index: number) => {
+    const animation = ANIMATIONS[index].animation;
+    if (animation && animation.detach)
+      animation.detach(contextRef.current);
+  }, []);
+
+  const drawText = useCallback(() => {
+    if (!font || !contextRef.current.project)
+      return;
+    contextRef.current.glyphs.forEach((g: any) => g.remove());
+    contextRef.current.glyphs = [];
+    if (contextRef.current.staticGlyphs) {
+      contextRef.current.staticGlyphs.forEach((g: any) => g.remove());
+    }
+    contextRef.current.staticGlyphs = [];
+
+    const { screenWidth, screenHeight } = contextRef.current;
+    const fontSizeMultiplier = 1;
+    const letterSpacing = -10;
+    const sizeScale = scaleLinear().domain([320, 768, 2560]).clamp(true).range([40, 100, 250]);
+    const calculatedSize = sizeScale(screenWidth);
+    const realFontSize = calculatedSize * fontSizeMultiplier;
+    setFontSize(realFontSize);
+
+    const fontScale = 1 / font.unitsPerEm * realFontSize;
+    
+    const getWidth = (str: string) => {
+      const glyphs = font.stringToGlyphs(str);
+      let width = 0;
+      glyphs.forEach((glyph, i) => {
+        if (glyph.advanceWidth) width += glyph.advanceWidth * fontScale;
+        if (i < glyphs.length - 1) {
+          width += font.getKerningValue(glyph, glyphs[i + 1]) * fontScale;
+        }
+        width += letterSpacing * fontScale;
+      });
+      return width;
+    };
+
+    const prefix = ">_ ";
+    const prefixWidthValue = getWidth(prefix);
+    const messageWidth = getWidth(message);
+    const totalWidth = prefixWidthValue + messageWidth;
+    
+    setTextWidth(messageWidth);
+    setPrefixWidth(prefixWidthValue);
+    
+    let x = (screenWidth - totalWidth) / 2;
+    const y = screenHeight / 2;
+    
+    contextRef.current.project.activate();
+    
+    // Draw prefix (static)
+    const prefixGlyphs = font.stringToGlyphs(prefix);
+    prefixGlyphs.forEach((glyphData, i) => {
+      const glyph = new Glyph({
+        glyph: glyphData,
+        x: x,
+        y: y,
+        fontSize: realFontSize,
+        fillColor: backgroundMode === "black" ? "white" : "black",
+        unitsPerEm: font.unitsPerEm
+      });
+      contextRef.current.staticGlyphs.push(glyph);
+      glyph.init();
+      if (glyphData.advanceWidth)
+        x += glyphData.advanceWidth * fontScale;
+      if (i < prefixGlyphs.length - 1)
+        x += font.getKerningValue(glyphData, prefixGlyphs[i + 1]) * fontScale;
+      x += letterSpacing * fontScale;
+    });
+
+    // Draw message (interactive/animated)
+    const fontGlyphs = font.stringToGlyphs(message);
+    fontGlyphs.forEach((glyphData, i) => {
+      const glyph = new Glyph({
+        glyph: glyphData,
+        x: x,
+        y: y,
+        fontSize: realFontSize,
+        fillColor: backgroundMode === "black" ? "white" : "black",
+        unitsPerEm: font.unitsPerEm
+      });
+      contextRef.current.glyphs.push(glyph);
+      glyph.init();
+      if (glyphData.advanceWidth)
+        x += glyphData.advanceWidth * fontScale;
+      if (i < fontGlyphs.length - 1)
+        x += font.getKerningValue(glyphData, fontGlyphs[i + 1]) * fontScale;
+      x += letterSpacing * fontScale;
+    });
+  }, [backgroundMode, font, message]);
+
   useEffect(() => {
     opentype.load(FONT_URL, (err, loadedFont) => {
       if (err) {
@@ -292,62 +441,7 @@ export default function Page() {
       detachAnimation(activeAnimationIndex);
       project.remove();
     };
-  }, [isFontLoaded, font, activeAnimationIndex, backgroundMode, message]);
-  const drawText = () => {
-    if (!font || !contextRef.current.project)
-      return;
-    contextRef.current.glyphs.forEach((g: any) => g.remove());
-    contextRef.current.glyphs = [];
-    const { screenWidth, screenHeight } = contextRef.current;
-    const fontSizeMultiplier = 1;
-    const letterSpacing = -10;
-    const sizeScale = scaleLinear().domain([320, 768, 2560]).clamp(true).range([40, 100, 250]);
-    const calculatedSize = sizeScale(screenWidth);
-    const realFontSize = calculatedSize * fontSizeMultiplier;
-    setFontSize(realFontSize);
-    const fontGlyphs = font.stringToGlyphs(message);
-    const fontScale = 1 / font.unitsPerEm * realFontSize;
-    let totalWidth = 0;
-    fontGlyphs.forEach((glyph, i) => {
-      if (glyph.advanceWidth) totalWidth += glyph.advanceWidth * fontScale;
-      if (i < fontGlyphs.length - 1) {
-        totalWidth += font.getKerningValue(glyph, fontGlyphs[i + 1]) * fontScale;
-      }
-      totalWidth += letterSpacing * fontScale;
-    });
-    setTextWidth(totalWidth);
-    let x = (screenWidth - totalWidth) / 2;
-    const y = screenHeight / 2 + realFontSize / 3;
-    contextRef.current.project.activate();
-    fontGlyphs.forEach((glyphData, i) => {
-      const glyph = new Glyph({
-        glyph: glyphData,
-        x: x,
-        y: y,
-        fontSize: realFontSize,
-        fillColor: backgroundMode === "black" ? "white" : "black",
-        unitsPerEm: font.unitsPerEm
-      });
-      contextRef.current.glyphs.push(glyph);
-      glyph.init();
-      if (glyphData.advanceWidth)
-        x += glyphData.advanceWidth * fontScale;
-      if (i < fontGlyphs.length - 1)
-        x += font.getKerningValue(glyphData, fontGlyphs[i + 1]) * fontScale;
-      x += letterSpacing * fontScale;
-    });
-  };
-
-  const attachAnimation = (index: number) => {
-    const animation = ANIMATIONS[index].animation;
-    if (animation && animation.attach)
-      animation.attach(contextRef.current, backgroundMode);
-  };
-  const detachAnimation = (index: number) => {
-    const animation = ANIMATIONS[index].animation;
-    if (animation && animation.detach)
-      animation.detach(contextRef.current);
-  };
+  }, [isFontLoaded, font, activeAnimationIndex, backgroundMode, message, attachAnimation, detachAnimation, drawText]);
 
   return (
     <div style={{
@@ -418,79 +512,98 @@ export default function Page() {
         )}
         <canvas
           ref={canvasRef}
-          style={{ width: '100%', height: '100%' }} />
-        {!isEditing && isFontLoaded && (
+          style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />
+
+        {/* Interaction and Prefix Layer */}
+        {isFontLoaded && (
           <div
-            onClick={() => {
-              setIsEditing(true);
-              setEditingText(message);
-            }}
             style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: `${textWidth}px`,
-              height: `${fontSize}px`,
-              cursor: 'text',
+              top: '50vh', // Matches Paper.js y = window.innerHeight / 2
+              left: `calc(50% + ${(prefixWidth - textWidth) / 2}px)`,
+              height: 0,
+              display: 'flex',
+              alignItems: 'baseline',
               zIndex: 5,
-            }} />
-        )}
-        {isEditing && (
-          <input
-            type="text"
-            autoFocus
-            value={editingText}
-            onChange={(e) => {
-              const newText = e.target.value;
-              setEditingText(newText);
-              if (newText.trim() !== '')
-                setMessage(newText);
-            }}
-            onBlur={() => {
-              setIsEditing(false);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape')
-                setIsEditing(false);
-            }}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              fontSize: `${fontSize}px`,
-              textAlign: 'center',
-              border: 'none',
-              outline: 'none',
-              backgroundColor: 'transparent',
-              color: 'transparent',
-              caretColor: backgroundMode === 'white' ? 'black' : 'white',
-              fontFamily: 'serif',
-              pointerEvents: 'auto',
-              zIndex: 10,
-              width: 'fit-content',
-              minWidth: '200px',
-              opacity: 0,
-            }} />
-        )}
-        {isEditing && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: `calc(50% + ${textWidth / 2}px + ${fontSize * 0.1}px)`,
-              transform: 'translateY(-50%)',
-              zIndex: 20,
               pointerEvents: 'none'
-            }} >
+            }}
+          >
+            {/* Interaction area / Input container */}
             <div
-              className="vertical-bar"
               style={{
-                width: `${Math.max(2, fontSize * 0.04)}px`,
-                height: `${fontSize * 1.2}px`,
-                backgroundColor: backgroundMode === 'white' ? 'black' : 'white',
-              }} />
+                position: 'relative',
+                width: `${textWidth}px`,
+                height: `${fontSize}px`,
+                transform: 'translateY(-100%)', // Align bottom of container with baseline
+                pointerEvents: 'auto',
+                cursor: 'text',
+              }}
+              onClick={() => {
+                setIsEditing(true);
+                setEditingText(message);
+              }}
+            >
+              {isEditing && (
+                <input
+                  type="text"
+                  autoFocus
+                  value={editingText}
+                  onChange={(e) => {
+                    const newText = e.target.value;
+                    setEditingText(newText);
+                    if (newText.trim() !== '') {
+                      setMessage(newText);
+                    }
+                  }}
+                  onBlur={() => {
+                    setIsEditing(false);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape' || e.key === 'Enter') {
+                      setIsEditing(false);
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    fontSize: `${fontSize}px`,
+                    textAlign: 'left',
+                    border: 'none',
+                    outline: 'none',
+                    backgroundColor: 'transparent',
+                    color: 'transparent', 
+                    caretColor: 'transparent', 
+                    fontFamily: "'Nanum Myeongjo', serif",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Custom cursor (vertical bar) */}
+            {isEditing && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: `${textWidth}px`,
+                  bottom: '0', // Align to the baseline
+                  transform: 'translateY(15%)', // Slight adjustment for baseline offset
+                  marginLeft: '4px',
+                  zIndex: 20,
+                  pointerEvents: 'none'
+                }}
+              >
+                <div
+                  className="vertical-bar"
+                  style={{
+                    width: `${Math.max(2, fontSize * 0.04)}px`,
+                    height: `${fontSize * 1.1}px`,
+                    backgroundColor: backgroundMode === 'white' ? 'black' : 'white',
+                  }}
+                />
+              </div>
+            )}
           </div>
         )}
       </section>

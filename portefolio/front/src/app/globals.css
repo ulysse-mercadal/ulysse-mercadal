@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('https://fonts.gstatic.com/s/nanummyeongjo/v6/9Bty3DZF0dXLMZlywRbVRNhxy2pLVGA5r_c.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body, html {
   margin: 0;
   padding: 0;
