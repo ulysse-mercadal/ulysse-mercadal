@@ -135,3 +135,14 @@
   animation: verticalBarEffect 1.5s infinite ease-in-out;
   transform-origin: center;
 }
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
