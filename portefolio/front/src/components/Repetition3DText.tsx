@@ -8,7 +8,7 @@ interface Repetition3DTextProps {
 }
 
 export const Repetition3DText = ({ text, color }: Repetition3DTextProps) => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 1, y: -1 });
   const [fontSize, setFontSize] = useState('6rem');
   const [letterSpacing, setLetterSpacing] = useState('8px');
   const [movementFactor, setMovementFactor] = useState(10);

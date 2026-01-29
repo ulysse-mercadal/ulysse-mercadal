@@ -11,8 +11,6 @@ import { bezierBubble } from '../components/animations/bezierBubble';
 import { sizeWaterfall } from '../components/animations/sizeWaterfall';
 import { shadowSkew } from '../components/animations/shadowSkew';
 import { riseAndBlur } from '../components/animations/riseAndBlur';
-
-// Extracted Components
 import { ZigZagDivider } from '../components/ZigZagDivider';
 import { Repetition3DText } from '../components/Repetition3DText';
 import { ResponsiveText } from '../components/ResponsiveText';
@@ -307,28 +305,6 @@ export default function Page() {
                 />
               )}
             </div>
-            {isEditing && (
-              <div
-                style={{
-                  position: 'absolute',
-                  left: `${textWidth}px`,
-                  bottom: '0',
-                  transform: 'translateY(15%)',
-                  marginLeft: '4px',
-                  zIndex: 20,
-                  pointerEvents: 'none'
-                }}
-              >
-                <div
-                  className="vertical-bar"
-                  style={{
-                    width: `${Math.max(2, fontSize * 0.04)}px`,
-                    height: `${fontSize * 1.1}px`,
-                    backgroundColor: backgroundMode === 'white' ? 'black' : 'white',
-                  }}
-                />
-              </div>
-            )}
           </div>
         )}
       </section>
@@ -345,7 +321,7 @@ export default function Page() {
         margin: 0,
         boxSizing: 'border-box',
       }}>
-        <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
+        {/* <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} /> */}
         <Repetition3DText
           text="About"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
@@ -452,7 +428,6 @@ export default function Page() {
               left: 0,
               right: 0,
               marginLeft: -5,
-
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
@@ -461,7 +436,7 @@ export default function Page() {
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="I am particularly passionate about designing complex back-end logic and constantly pushing my own boundaries."
+              text="I am particularly passionate about designing complex back-end and low level logic and constantly pushing my own boundaries."
               style={{ position: 'relative', zIndex: 1 }}
               animationType="wave-effect"
               delay={500}
@@ -482,7 +457,7 @@ export default function Page() {
         margin: 0,
         boxSizing: 'border-box'
       }}>
-        <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'}/>
+        {/* <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'}/> */}
         <Repetition3DText
           text="Projects"
           color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
@@ -543,7 +518,7 @@ export default function Page() {
         margin: 0,
         boxSizing: 'border-box'
       }}>
-        <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
+        {/* <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} /> */}
         <Repetition3DText
           text="Experiences"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'}

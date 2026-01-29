@@ -203,7 +203,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
       icon: Send,
       links: [
         { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
-        { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal/", icon: Linkedin }
+        { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
       ]
     }
   ];
