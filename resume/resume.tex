@@ -1,0 +1,234 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0pt]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.misc}
+\usepackage{xcolor}
+\definecolor{discordblack}{HTML}{0f0f0f}
+\usepackage{graphicx}
+\usepackage{lmodern} % Adds scalable fonts to support large sizes
+
+\newcommand{\chip}[1]{%
+    \tikz[baseline]
+    \node[anchor=base, draw=none, fill=white, rounded rectangle, inner ysep=3pt, inner xsep=6pt, text height=1.5ex, text depth=0.5ex, text=discordblack, font=\small\sffamily\bfseries] {#1};%
+}
+\newcommand{\blackchip}[1]{%
+    \tikz[baseline]
+    \node[anchor=base, draw=none, fill=discordblack, rounded rectangle, inner ysep=4pt, inner xsep=8pt, text height=1.8ex, text depth=0.6ex, text=white, font=\normalsize\sffamily\bfseries] {#1};%
+}
+
+% --- Lucide-style Icons using TikZ ---
+\newcommand{\iconTerminal}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white] (-3,-2) -- (-1,0) -- (-3,2);
+        \draw[white] (0,-2) -- (3,-2);
+    }%
+}
+\newcommand{\iconWeb}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white] (0,0) circle (3);
+        \draw[white] (-3,0) -- (3,0);
+        \draw[white] (0,-3) -- (0,3);
+        \draw[white] (0,0) ellipse (1.2 and 3);
+    }%
+}
+\newcommand{\iconMobile}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white, rounded corners=1pt] (-2,-3) rectangle (2,3);
+        \draw[white] (-0.7,-2.2) -- (0.7,-2.2);
+    }%
+}
+\newcommand{\iconLoop}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white] (0,0) .. controls (2,1.8) and (3.5,1) .. (3.5,0)
+                   .. controls (3.5,-1) and (2,-1.8) .. (0,0)
+                   .. controls (-2,1.8) and (-3.5,1) .. (-3.5,0)
+                   .. controls (-3.5,-1) and (-2,-1.8) .. (0,0);
+    }%
+}
+\newcommand{\iconDB}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white] (0,2) ellipse (3 and 1.2);
+        \draw[white] (3,2) -- (3,-2);
+        \draw[white] (-3,2) -- (-3,-2);
+        \draw[white] (3,-2) arc (0:-180:3 and 1.2);
+        \draw[white] (3,0) arc (0:-180:3 and 1.2);
+    }%
+}
+\newcommand{\iconCube}{%
+    \tikz[baseline=-0.7ex, line width=1.6pt, line cap=round, line join=round, scale=0.09]{
+        \draw[white] (-3,1.5) -- (0,3) -- (3,1.5) -- (0,0) -- cycle;
+        \draw[white] (-3,1.5) -- (-3,-1.5) -- (0,-3) -- (0,0);
+        \draw[white] (3,1.5) -- (3,-1.5) -- (0,-3);
+        \draw[white] (0,0) -- (0,-3);
+    }%
+}
+
+\newcommand{\skillRow}[2]{%
+    \noindent
+    \begin{minipage}[t]{0.05\paperwidth}
+        #1
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.2\paperwidth}
+        \raggedleft
+        \linespread{1.5}\selectfont
+        #2
+    \end{minipage}
+    \par
+    \vspace{5pt}
+    \noindent\tikz\draw[dotted, white, thick] (0,0) -- (\linewidth,0);
+    \par
+    % \vspace{5pt}
+}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{tikzpicture}[remember picture,overlay]
+    % Black Sidebar (Left 1/3)
+    \fill[discordblack] (current page.north west) rectangle ++(0.33333\paperwidth,-\paperheight);
+    % Black Topbar (Top 1/3)
+    \fill[discordblack] (current page.north west) rectangle ++(\paperwidth,-0.33333\paperwidth);
+
+    % Rounding the inner corner (Intersection of white area)
+    \fill[discordblack] ([xshift=0.33333\paperwidth, yshift=-0.33333\paperwidth]current page.north west)
+        -- ++(1cm, 0)
+        arc[start angle=90, end angle=180, radius=1cm]
+        -- cycle;
+
+            % Photo (Centered in the top-left square area)
+            \node[circle, draw=white, ultra thick, minimum size=5cm, inner sep=0pt, path picture={
+                \node at (path picture bounding box.center) {
+                    \includegraphics[width=5cm]{ulysse-mercadal.jpg}
+                };
+            }]
+                at ([xshift=0.16666\paperwidth, yshift=-0.16666\paperwidth]current page.north west)
+                {};    % Main Content (Name, Bio, Contact) - Centered in the right 2/3 of the top bar
+    \node[anchor=north, text width=0.6\paperwidth, align=center, inner sep=0pt]
+        at ([xshift=0.65\paperwidth, yshift=-0.05\paperwidth]current page.north west)
+    {
+        \color{white} \sffamily
+        {\fontsize{40}{45}\selectfont \rmfamily \textbf{Ulysse \ \ \ \ \  Mercadal}}\\[0.5cm]
+        \hrule width \hsize height 1pt \vspace{0.5cm}
+        {\large ulyssemercadal@kakao.com \hspace{1em} $\cdot$ \hspace{1em} +33 6 20 37 66 48}\\[0.5cm]
+        \hrule width \hsize height 1pt \vspace{0.5cm}
+        {\Large \textbf{Developer} \hspace{1em} -- \hspace{1em} \textbf{3rd year student at Epitech Lyon}}\\[0.3cm]
+        {\large Looking for a 4 to 5-month internship starting April 2026.\\
+         Eager to apply my technical skills and contribute to a dynamic team.}
+    };
+
+    % Sidebar Content (Skills, Languages, Hobbies)
+    \node[anchor=north, text width=0.28\paperwidth, align=center]
+        at ([xshift=0.16666\paperwidth, yshift=-0.34\paperwidth]current page.north west)
+    {
+        \color{white} \sffamily
+
+        % Technical Skills
+        {\Large \textbf{TECHNICAL SKILLS}}\\[0.5cm]
+        \hrule width \linewidth height 1pt \vspace{15pt}
+
+        \raggedright
+        \linespread{1.5}\selectfont
+
+        % Low Level
+        \skillRow{\iconTerminal}{\chip{C/C++} \chip{Zig} \chip{Go} \chip{Java} \chip{Python}}
+
+        % Web App
+        \skillRow{\iconWeb}{\chip{TypeScript} \chip{React} \chip{Next.js}}
+
+        % Mobile
+        \skillRow{\iconMobile}{\chip{React Native} \chip{Flutter}}
+
+        % CI/CD
+        \skillRow{\iconLoop}{\chip{Docker} \chip{Jenkins} \chip{GitHub Actions}}
+
+        % DB
+        \skillRow{\iconDB}{\chip{PostgreSQL} \chip{MongoDB} \chip{Redis}}
+
+        % 3D Graphics
+        \iconCube \hfill \begin{minipage}[t]{0.2\paperwidth}\raggedleft \chip{OpenGL} \chip{Vulkan}\end{minipage}
+
+        \vspace{1.5cm}
+        \centering
+
+        % Soft Skills
+        {\Large \textbf{SOFT SKILLS}}\\[0.5cm]
+        \hrule width \linewidth height 1pt \vspace{0.5cm}
+        \centering
+        \chip{Autonomy} \chip{Adaptability} \chip{Problem Solving} \chip{Pedagogy} \chip{Agile Methodologies} \\[0.8cm]
+        % Languages
+        \vspace{1cm}
+        \
+        {\Large \textbf{LANGUAGES}}\\[0.5cm]
+        \hrule width \linewidth height 1pt \vspace{0.5cm}
+        French: \chip{Native}\\[0.2cm]
+        English: \chip{Fluent}\\[0.2cm]
+        Spanish: \chip{Advanced}\\[0.2cm]
+        Chinese: \chip{Basic}\\[0.8cm]
+    };
+
+    % Central White Area Content
+    \node[anchor=north west, text width=0.58\paperwidth, align=justify]
+        at ([xshift=0.36\paperwidth, yshift=-0.36\paperwidth]current page.north west)
+    {
+        \color{discordblack} \sffamily
+
+        % Work Experience
+        {\Large \textbf{WORK EXPERIENCE}}\\[0.1cm]
+        \hrule width \linewidth height 1pt \vspace{0.3cm}
+
+        \blackchip{Regional Educational Assistant (AER)} \\[0.4cm]
+        \textit{IONIS Education Group} \hfill \textit{Since Sep 2025}\\
+        \textit{-} \hfill \textit{Lyon, France}\\
+
+        \vspace{-0.3cm}
+        \begin{itemize}
+            \item Supported and mentored lower-year students at Epitech Lyon. My mission involves teaching best coding practices through code reviews and answering technical questions.
+        \end{itemize}
+        \noindent\tikz\draw[dotted, discordblack, thick] (0,0) -- (\linewidth,0);
+        \vspace{1pt}
+
+        \blackchip{IT Intern (FabLab)} \\[0.4cm]
+        \textit{BPCE-IT (Banque Populaire Caisse d'Epargne)} \hfill \textit{5 months, 2024}\\
+        \textit{-} \hfill \textit{Paris, France}\\
+
+        \vspace{-0.3cm}
+        \begin{itemize}
+            \item Experimented with new technologies to identify use cases for the 2nd largest French banking group. My mission was to develop POCs and MVPs focusing mainly on LLMs, RAG, OpenTelemetry, and non-relational databases.
+        \end{itemize}
+        \vspace{0.5cm}
+
+        % Projects
+        {\Large \textbf{PROJECTS}}\\[0.1cm]
+        \hrule width \linewidth height 1pt \vspace{0.3cm}
+
+        \blackchip{AREA} \hfill \textit{React, NestJS, Flutter, PostgreSQL}\\[0.1cm]
+        \vspace{-0.3cm}
+        \begin{itemize}
+            \item Developed a web and mobile task automation system inspired by n8n and Zapier during a \
+            \item 5-week project with a team of 5.
+        \end{itemize}
+        \noindent\tikz\draw[dotted, discordblack, thick] (0,0) -- (\linewidth,0);
+        \vspace{1pt}
+
+        \blackchip{R-TYPE} \hfill \textit{C++, C, OpenGL, Network Programming}\\[0.1cm]
+        \vspace{-0.3cm}
+        \begin{itemize}
+            \item Created a server, custom binary protocol, 3D graphical client, and an ECS game engine for a space shooter game as an end-of-year
+            \item 6-week project in a team of 4.
+        \end{itemize}
+        \vspace{0.5cm}
+
+        % Hobbies
+        {\Large \textbf{HOBBIES}}\\[0.1cm]
+        \center
+        \vspace{-0.3cm}
+        \hrule width \linewidth height 1pt \vspace{0.5cm}
+        Solo traveling (Japan, China, Taiwan, Hong Kong) \\
+        Mountain sports \\
+        Programming \\
+        Electronics \\
+    };
+\end{tikzpicture}
+\end{document}
