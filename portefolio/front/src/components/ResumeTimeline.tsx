@@ -199,12 +199,12 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           technologies: ["Haskell", "C++", "C", "Java"]
         },
         {
-          date: "Full Remote",
-          title: "Développeur Full Stack",
+          date: "5 mois",
+          title: "Développeur Full Stack (Stagiaire)",
           subtitle: "Ezyperf",
-          description: "Développement des modules de gestion des ressources humaines et des fonctionnalités de suivi des temps / activité pour un progiciel ERP en 100% télétravail.",
+          description: "Stage en 100% télétravail : développement du module RH et du suivi des temps d'un ERP destiné aux PME et ETI.",
           icon: Briefcase,
-          technologies: ["TypeScript", "React", "Node.js", "ERP"]
+          technologies: ["Go", "TypeScript", "React", "Node.js", "ERP"]
         },
         {
           date: "futur...",
@@ -236,12 +236,12 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           technologies: ["Haskell", "C++", "C", "Java"]
         },
         {
-          date: "Full Remote",
-          title: "Full Stack Developer",
+          date: "5 Months",
+          title: "Full Stack Developer Intern",
           subtitle: "Ezyperf",
-          description: "Developed HR management modules and activity / time tracking features for an ERP solution in a full-remote environment.",
+          description: "Full-remote internship: development of the HR module and time-tracking features for an ERP dedicated to SMEs and mid-tier enterprises.",
           icon: Briefcase,
-          technologies: ["TypeScript", "React", "Node.js", "ERP"]
+          technologies: ["Go", "TypeScript", "React", "Node.js", "ERP"]
         },
         {
           date: "future...",
