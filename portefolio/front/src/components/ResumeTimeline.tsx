@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, GraduationCap, Github, Linkedin, Send, Clock } from "lucide-react";
+import { Briefcase, GraduationCap, Github, Linkedin, Send, Clock, FileText } from "lucide-react";
 import { useLanguage } from '../context/LanguageContext';
 
 interface TimelineEntryProps {
@@ -202,7 +202,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           date: "5 mois",
           title: "Développeur Full Stack (Stagiaire)",
           subtitle: "Ezyperf",
-          description: "Stage en 100% télétravail : développement du module RH et du suivi des temps d'un ERP destiné aux PME et ETI.",
+          description: "Stage en 100% télétravail (France / Japon) : développement du module RH et du suivi des temps d'un ERP destiné aux PME et ETI.",
           icon: Briefcase,
           technologies: ["Go", "TypeScript", "React", "Node.js", "ERP"]
         },
@@ -213,6 +213,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           description: "Ma prochaine expérience pourrait être avec vous ! Je recherche des défis techniques où appliquer mon expertise en logique bas niveau, moteurs graphiques et architecture full-stack.",
           icon: Send,
           links: [
+            { label: "CV (PDF)", url: "/cv", icon: FileText },
             { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
             { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
           ]
@@ -239,7 +240,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           date: "5 Months",
           title: "Full Stack Developer Intern",
           subtitle: "Ezyperf",
-          description: "Full-remote internship: development of the HR module and time-tracking features for an ERP dedicated to SMEs and mid-tier enterprises.",
+          description: "Full-remote internship (France / Japan): development of the HR module and time-tracking features for an ERP dedicated to SMEs and mid-tier enterprises.",
           icon: Briefcase,
           technologies: ["Go", "TypeScript", "React", "Node.js", "ERP"]
         },
@@ -250,6 +251,7 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
           description: "My next experience could be with you! I'm looking for challenging projects where I can apply my expertise in low-level programming, graphics, and full-stack development",
           icon: Send,
           links: [
+            { label: "Resume (PDF)", url: "/cv", icon: FileText },
             { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
             { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
           ]

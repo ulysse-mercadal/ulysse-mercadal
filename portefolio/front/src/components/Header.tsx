@@ -31,11 +31,13 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
         { label: 'À propos', href: '/#about' },
         { label: 'Projets', href: '/#projects' },
         { label: 'Expériences', href: '/#experiences' },
+        { label: 'CV', href: '/cv' },
       ]
     : [
         { label: 'About', href: '/#about' },
         { label: 'Projects', href: '/#projects' },
         { label: 'Experiences', href: '/#experiences' },
+        { label: 'Resume', href: '/cv' },
       ];
 
   const headerStyle: React.CSSProperties = {
