@@ -494,6 +494,7 @@ export default function Page() {
                 teamSize={project.teamSize}
                 githubUrl={project.githubUrl}
                 liveUrl={project.liveUrl}
+                links={project.links}
                 backgroundMode={backgroundMode as 'white' | 'black'}
               />
             );

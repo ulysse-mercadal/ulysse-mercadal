@@ -14,6 +14,7 @@ interface ProjectCardProps {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  links?: { label: string; url: string }[];
   duration: string;
   teamSize: number;
   backgroundMode: 'white' | 'black';
@@ -27,6 +28,7 @@ export const ProjectCard = ({
   technologies,
   githubUrl,
   liveUrl,
+  links,
   duration,
   teamSize,
   backgroundMode
@@ -88,15 +90,39 @@ export const ProjectCard = ({
             </span>
           )}
         </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
           {githubUrl && (
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
-              <Github size={24} />
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }} title="GitHub">
+              <Github size={22} />
             </a>
           )}
-          {liveUrl && (
+          {links && links.map(link => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              style={{
+                color: 'inherit',
+                textDecoration: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                padding: '3px 8px',
+                border: `1px solid ${borderColor}`,
+                borderRadius: '2px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+              }}
+            >
+              <span>{link.label}</span>
+              <ExternalLink size={12} />
+            </a>
+          ))}
+          {liveUrl && !links && (
             <a href={liveUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
-              <ExternalLink size={24} />
+              <ExternalLink size={22} />
             </a>
           )}
         </div>
@@ -130,7 +156,7 @@ export const ProjectCard = ({
         paddingTop: '1.5rem',
         borderTop: `0.5px solid ${borderColor}`,
         fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)',
-        opacity: 0.6
+        opacity: 0.7
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Clock size={16} />

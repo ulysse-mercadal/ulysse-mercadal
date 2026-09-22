@@ -8,12 +8,6 @@ import {
   ExternalLink,
   Sun,
   Moon,
-  Clock,
-  Users,
-  CheckCircle2,
-  Cpu,
-  Layers,
-  Sparkles,
   ArrowRight
 } from 'lucide-react';
 import { Project, PROJECTS } from '../../../data/projects';
@@ -65,6 +59,8 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '0.6rem',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <Link
@@ -85,7 +81,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           </Link>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
           {project.githubUrl && (
             <a
               href={project.githubUrl}
@@ -109,6 +105,31 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
               <span>GitHub</span>
             </a>
           )}
+
+          {project.links && project.links.map(link => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                color: 'inherit',
+                textDecoration: 'none',
+                padding: '6px 12px',
+                border: `1px solid ${borderColor}`,
+                borderRadius: '2px',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                letterSpacing: '0.5px',
+              }}
+            >
+              <span>{link.label}</span>
+              <ExternalLink size={13} />
+            </a>
+          ))}
 
           {/* Language Switcher Button */}
           <button
@@ -231,21 +252,18 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             marginTop: '2.5rem',
             paddingTop: '1.5rem',
             borderTop: `1px dashed ${borderColor}`,
-            fontSize: '0.9rem',
-            opacity: 0.85,
+            fontSize: '0.88rem',
+            letterSpacing: '0.5px',
+            opacity: 0.9,
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Clock size={16} />
-              <span><strong>{language === 'fr' ? 'Durée :' : 'Duration:'}</strong> {t.duration}</span>
+            <div>
+              <strong>{language === 'fr' ? 'DURÉE :' : 'DURATION:'}</strong> {t.duration}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Users size={16} />
-              <span>
-                <strong>{language === 'fr' ? 'Équipe :' : 'Team:'}</strong>{' '}
-                {project.teamSize === 1
-                  ? (language === 'fr' ? 'Solo' : 'Solo')
-                  : `${project.teamSize} ${language === 'fr' ? 'développeurs' : 'developers'}`}
-              </span>
+            <div>
+              <strong>{language === 'fr' ? 'ÉQUIPE :' : 'TEAM:'}</strong>{' '}
+              {project.teamSize === 1
+                ? 'Solo'
+                : `${project.teamSize} ${language === 'fr' ? 'développeurs' : 'developers'}`}
             </div>
             {project.githubUrl && (
               <a
@@ -255,16 +273,35 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.4rem',
+                  gap: '0.35rem',
                   color: 'inherit',
                   textDecoration: 'underline',
                   fontWeight: 600,
                 }}
               >
-                <span>{language === 'fr' ? 'Voir sur GitHub' : 'View on GitHub'}</span>
+                <span>GitHub</span>
                 <ExternalLink size={13} />
               </a>
             )}
+            {project.links && project.links.map(link => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                  fontWeight: 600,
+                }}
+              >
+                <span>{link.label}</span>
+                <ExternalLink size={13} />
+              </a>
+            ))}
           </div>
         </section>
 
@@ -272,17 +309,13 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         {t.highlights && t.highlights.length > 0 && (
           <section>
             <h2 style={{
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+              fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
               fontWeight: 800,
-              letterSpacing: '-0.5px',
+              letterSpacing: '0.5px',
               marginBottom: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
               textTransform: 'uppercase',
             }}>
-              <Cpu size={20} />
-              <span>{language === 'fr' ? 'Architecture & Composants' : 'Architecture & Key Components'}</span>
+              {language === 'fr' ? 'Architecture & Composants' : 'Architecture & Components'}
             </h2>
 
             <div style={{
@@ -331,17 +364,13 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             backgroundColor: cardBg,
           }}>
             <h2 style={{
-              fontSize: 'clamp(1.15rem, 2.2vw, 1.4rem)',
+              fontSize: 'clamp(1.15rem, 2.2vw, 1.35rem)',
               fontWeight: 800,
-              letterSpacing: '-0.5px',
+              letterSpacing: '0.5px',
               margin: '0 0 1.2rem 0',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
               textTransform: 'uppercase',
             }}>
-              <Sparkles size={18} />
-              <span>{language === 'fr' ? 'Fonctionnalités Clés' : 'Key Features'}</span>
+              {language === 'fr' ? 'Fonctionnalités' : 'Features'}
             </h2>
 
             <ul style={{
@@ -357,59 +386,18 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                   key={idx}
                   style={{
                     display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.8rem',
+                    alignItems: 'baseline',
+                    gap: '0.75rem',
                     fontSize: '0.92rem',
                     lineHeight: 1.5,
                     opacity: 0.9,
                   }}
                 >
-                  <CheckCircle2 size={16} style={{ marginTop: '3px', flexShrink: 0, opacity: 0.7 }} />
+                  <span style={{ fontWeight: 800, opacity: 0.5 }}>—</span>
                   <span>{feat}</span>
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-
-        {/* Challenges & Technical Learnings */}
-        {t.challenges && t.challenges.length > 0 && (
-          <section>
-            <h2 style={{
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.5px',
-              marginBottom: '1.2rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              textTransform: 'uppercase',
-            }}>
-              <Layers size={20} />
-              <span>{language === 'fr' ? 'Défis Techniques' : 'Technical Challenges'}</span>
-            </h2>
-
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.8rem',
-            }}>
-              {t.challenges.map((challenge, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    padding: '1rem 1.2rem',
-                    borderLeft: `2px solid ${textColor}`,
-                    backgroundColor: isWhite ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.6,
-                    opacity: 0.85,
-                  }}
-                >
-                  {challenge}
-                </div>
-              ))}
-            </div>
           </section>
         )}
 
@@ -419,7 +407,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           borderTop: `1px solid ${borderColor}`,
         }}>
           <h3 style={{
-            fontSize: '0.9rem',
+            fontSize: '0.85rem',
             textTransform: 'uppercase',
             letterSpacing: '1px',
             marginBottom: '1rem',
@@ -455,7 +443,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           borderTop: `1px solid ${borderColor}`,
         }}>
           <h3 style={{
-            fontSize: '1rem',
+            fontSize: '0.95rem',
             fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '1px',
