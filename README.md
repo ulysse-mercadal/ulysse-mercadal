@@ -50,9 +50,9 @@
 class UMercadal:
     def __init__(self):
         self.name = "Ulysse Mercadal"
-        self.age = 20
-        self.role = "3rd year C.S. student"
-        self.education = "Epitech Lyon and Paris"
+        self.age = 21
+        self.role = "4rd year C.S. student - in a gap year"
+        self.education = "Epitech Lyon and Paris | International Chinese Language Program (NTU - Taipei)"
         self.languages = ["French", "English"]
         self.interests = ["Solo traveling", "code", "mountain sports"]
 
