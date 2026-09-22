@@ -1,0 +1,350 @@
+/* CSS Animations to replicate Paper.js effects */
+
+.animated-text-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Size Waterfall Animation (Repetition 3D) */
+.size-waterfall {
+  position: relative;
+  display: inline-block;
+}
+
+.size-waterfall .char-0 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0s;
+}
+.size-waterfall .char-1 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.05s;
+}
+.size-waterfall .char-2 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.1s;
+}
+.size-waterfall .char-3 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.15s;
+}
+.size-waterfall .char-4 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.2s;
+}
+.size-waterfall .char-5 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.25s;
+}
+.size-waterfall .char-6 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.3s;
+}
+.size-waterfall .char-7 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.35s;
+}
+.size-waterfall .char-8 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.4s;
+}
+.size-waterfall .char-9 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.45s;
+}
+.size-waterfall .char-10 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.5s;
+}
+.size-waterfall .char-11 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.55s;
+}
+.size-waterfall .char-12 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.6s;
+}
+.size-waterfall .char-13 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.65s;
+}
+.size-waterfall .char-14 { 
+  animation: sizeWaterfallEffect 3s infinite ease-in-out; 
+  animation-delay: 0.7s;
+}
+
+@keyframes sizeWaterfallEffect {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-20px) translateY(-10px) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(0) translateY(0) scale(0.7);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateX(20px) translateY(-5px) scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Shadow Skew Animation (Cross 3D) */
+.shadow-skew {
+  position: relative;
+  display: inline-block;
+}
+
+.shadow-skew .char-0 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0s;
+}
+.shadow-skew .char-1 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.05s;
+}
+.shadow-skew .char-2 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.1s;
+}
+.shadow-skew .char-3 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.15s;
+}
+.shadow-skew .char-4 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.2s;
+}
+.shadow-skew .char-5 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.25s;
+}
+.shadow-skew .char-6 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.3s;
+}
+.shadow-skew .char-7 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.35s;
+}
+.shadow-skew .char-8 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.4s;
+}
+.shadow-skew .char-9 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.45s;
+}
+.shadow-skew .char-10 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.5s;
+}
+.shadow-skew .char-11 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.55s;
+}
+.shadow-skew .char-12 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.6s;
+}
+.shadow-skew .char-13 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.65s;
+}
+.shadow-skew .char-14 { 
+  animation: shadowSkewEffect 2s infinite ease-in-out; 
+  animation-delay: 0.7s;
+}
+
+@keyframes shadowSkewEffect {
+  0%, 100% {
+    transform: skewX(0deg);
+    text-shadow: 0 0 0px rgba(0,0,0,0);
+  }
+  25% {
+    transform: skewX(5deg);
+    text-shadow: 4px 0 4px rgba(0,0,0,0.5);
+  }
+  50% {
+    transform: skewX(-5deg);
+    text-shadow: -4px 0 4px rgba(0,0,0,0.5);
+  }
+  75% {
+    transform: skewX(3deg);
+    text-shadow: 2px 0 2px rgba(0,0,0,0.3);
+  }
+}
+
+/* Rise and Blur Animation (Cascade Effect) */
+.rise-blur {
+  position: relative;
+  display: inline-block;
+}
+
+.rise-blur .char-0 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0s;
+}
+.rise-blur .char-1 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.1s;
+}
+.rise-blur .char-2 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.2s;
+}
+.rise-blur .char-3 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.3s;
+}
+.rise-blur .char-4 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.4s;
+}
+.rise-blur .char-5 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.5s;
+}
+.rise-blur .char-6 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.6s;
+}
+.rise-blur .char-7 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.7s;
+}
+.rise-blur .char-8 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.8s;
+}
+.rise-blur .char-9 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 0.9s;
+}
+.rise-blur .char-10 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 1.0s;
+}
+.rise-blur .char-11 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 1.1s;
+}
+.rise-blur .char-12 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 1.2s;
+}
+.rise-blur .char-13 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 1.3s;
+}
+.rise-blur .char-14 { 
+  animation: riseBlurEffect 3s infinite ease-in-out; 
+  animation-delay: 1.4s;
+}
+
+@keyframes riseBlurEffect {
+  0%, 100% {
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+  30% {
+    transform: translateY(-15px);
+    filter: blur(1px);
+  }
+  60% {
+    transform: translateY(0);
+    filter: blur(0.5px);
+  }
+}
+
+/* Bezier Bubble Animation (Wireframe) */
+.bezier-bubble {
+  position: relative;
+  display: inline-block;
+}
+
+.bezier-bubble .char-0 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0s;
+}
+.bezier-bubble .char-1 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.08s;
+}
+.bezier-bubble .char-2 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.16s;
+}
+.bezier-bubble .char-3 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.24s;
+}
+.bezier-bubble .char-4 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.32s;
+}
+.bezier-bubble .char-5 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.4s;
+}
+.bezier-bubble .char-6 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.48s;
+}
+.bezier-bubble .char-7 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.56s;
+}
+.bezier-bubble .char-8 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.64s;
+}
+.bezier-bubble .char-9 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.72s;
+}
+.bezier-bubble .char-10 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.8s;
+}
+.bezier-bubble .char-11 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.88s;
+}
+.bezier-bubble .char-12 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 0.96s;
+}
+.bezier-bubble .char-13 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 1.04s;
+}
+.bezier-bubble .char-14 { 
+  animation: bezierBubbleEffect 2.5s infinite ease-in-out; 
+  animation-delay: 1.12s;
+}
+
+@keyframes bezierBubbleEffect {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    text-shadow: 0 0 0 rgba(0,0,0,0);
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+    text-shadow: 0 0 8px rgba(0,0,0,0.3);
+  }
+  50% {
+    transform: scale(0.95) rotate(-1deg);
+    text-shadow: 0 0 4px rgba(0,0,0,0.2);
+  }
+  75% {
+    transform: scale(1.05) rotate(1deg);
+    text-shadow: 0 0 6px rgba(0,0,0,0.25);
+  }
+}
