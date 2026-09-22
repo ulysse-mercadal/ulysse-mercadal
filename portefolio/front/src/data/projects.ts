@@ -40,19 +40,19 @@ export const PROJECTS: Project[] = [
       duration: 'En cours (WIP)',
       highlights: [
         {
-          title: '⚡ poi-api (Go)',
+          title: 'poi-api (Go)',
           description: 'Microservice haute cadence écrit en Go sur le port 8080, chargé de l\'indexation et de la recherche géospatiale de points d\'intérêt (POI) ainsi que de flux d\'événements en temps réel.'
         },
         {
-          title: '🧠 itinerary-api (Python)',
+          title: 'itinerary-api (Python)',
           description: 'Moteur intelligent en Python sur le port 8000 qui consomme poi-api pour synthétiser, ordonnancer et composer des itinéraires de voyage sur-mesure.'
         },
         {
-          title: '🌐 Traefik & Architecture Ouverte',
+          title: 'Traefik & Architecture Ouverte',
           description: 'Reverse proxy Traefik gérant le routage dynamique sous domaine *.localhost en local sans configuration DNS, avec les flags d\'authentification désactivés pour une stack 100% ouverte.'
         },
         {
-          title: '💻 Landing Page & Vitrine',
+          title: 'Landing Page & Vitrine',
           description: 'Interface vitrine moderne en Next.js / TypeScript pour tester l\'API et visualiser les itinéraires générés.'
         }
       ],
@@ -77,19 +77,19 @@ export const PROJECTS: Project[] = [
       duration: 'In progress (WIP)',
       highlights: [
         {
-          title: '⚡ poi-api (Go)',
+          title: 'poi-api (Go)',
           description: 'High-throughput Go microservice running on port 8080, handling geospatial POI searches and live event data feeds.'
         },
         {
-          title: '🧠 itinerary-api (Python)',
+          title: 'itinerary-api (Python)',
           description: 'Python engine running on port 8000 calling poi-api to automatically generate and schedule optimal travel itineraries.'
         },
         {
-          title: '🌐 Traefik & Open Architecture',
+          title: 'Traefik & Open Architecture',
           description: 'Traefik reverse proxy providing seamless hot-reload routing under *.localhost without host editing, running with auth disabled for public exploration.'
         },
         {
-          title: '💻 Landing Page & Showcase',
+          title: 'Landing Page & Showcase',
           description: 'Modern Next.js / TypeScript showcase interface to test public endpoints and visualize generated trips.'
         }
       ],
@@ -121,15 +121,15 @@ export const PROJECTS: Project[] = [
       duration: '6 semaines',
       highlights: [
         {
-          title: '🕹️ Moteur ECS sur-mesure',
+          title: 'Moteur ECS sur-mesure',
           description: 'Système Entité-Composant-Système conçu de zéro permettant un découplage total entre la logique des vaisseaux, la physique, et le rendu 3D OpenGL.'
         },
         {
-          title: '📡 Protocole Réseau UDP/TCP binaire',
+          title: 'Protocole Réseau UDP/TCP binaire',
           description: 'Protocole binaire ultra-compact utilisant Asio pour synchroniser les joueurs et les projectiles avec un minimum d\'overhead réseau.'
         },
         {
-          title: '⚙️ Cross-compilation Windows & Linux',
+          title: 'Cross-compilation Windows & Linux',
           description: 'Gestion automatisée des dépendances et du build multi-OS via CMake et Conan, assurant une compatibilité parfaite entre plateformes.'
         }
       ],
@@ -154,15 +154,15 @@ export const PROJECTS: Project[] = [
       duration: '6 weeks',
       highlights: [
         {
-          title: '🕹️ Bespoke ECS Engine',
+          title: 'Bespoke ECS Engine',
           description: 'Entity Component System built from scratch ensuring total decoupling between ship logic, physics, and OpenGL 3D rendering.'
         },
         {
-          title: '📡 Binary UDP/TCP Network Protocol',
+          title: 'Binary UDP/TCP Network Protocol',
           description: 'Lightweight custom binary wire protocol using Asio to synchronize player states and projectiles with minimal overhead.'
         },
         {
-          title: '⚙️ Cross-Compilation Windows & Linux',
+          title: 'Cross-Compilation Windows & Linux',
           description: 'Automated dependency management and build pipeline using CMake and Conan, guaranteeing cross-platform compatibility.'
         }
       ],
@@ -194,19 +194,19 @@ export const PROJECTS: Project[] = [
       duration: '5 semaines',
       highlights: [
         {
-          title: '🔄 Éditeur de Workflow Visuel',
+          title: 'Éditeur de Workflow Visuel',
           description: 'Interface graphique interactive permettant de relier des déclencheurs (triggers), des conditions logiques et des actions concrètes.'
         },
         {
-          title: '🔑 Intégrations OAuth & Webhooks',
+          title: 'Intégrations OAuth & Webhooks',
           description: 'Connexion sécurisée à plus de 6 services (Google, Discord, Spotify, GitHub, Notion, etc.) avec rafraîchissement automatique des tokens.'
         },
         {
-          title: '📱 Double Client Web & Mobile',
+          title: 'Double Client Web & Mobile',
           description: 'Dashboard Web complet développé en Next.js / TypeScript et application mobile native réalisée en Flutter.'
         },
         {
-          title: '🏗️ Backend Microservices & Prisma',
+          title: 'Backend Microservices & Prisma',
           description: 'Serveur API modulaire avec NestJS, base de données relationnelle PostgreSQL orchestrée par Prisma ORM et conteneurisation Docker.'
         }
       ],
@@ -231,19 +231,19 @@ export const PROJECTS: Project[] = [
       duration: '5 weeks',
       highlights: [
         {
-          title: '🔄 Visual Workflow Editor',
+          title: 'Visual Workflow Editor',
           description: 'Interactive canvas allowing users to connect triggers, conditional branching logic, and action executions.'
         },
         {
-          title: '🔑 OAuth & Webhook Integrations',
+          title: 'OAuth & Webhook Integrations',
           description: 'Secure token authentication connecting over 6 platforms (Google, Discord, Spotify, GitHub, Notion, etc.) with automatic token refreshing.'
         },
         {
-          title: '📱 Dual Web & Mobile Clients',
+          title: 'Dual Web & Mobile Clients',
           description: 'Full-featured web dashboard in Next.js / React and native cross-platform mobile client built with Flutter.'
         },
         {
-          title: '🏗️ Microservices Backend & Prisma',
+          title: 'Microservices Backend & Prisma',
           description: 'Modular API backend in NestJS, relational PostgreSQL database with Prisma ORM, and full Docker container orchestration.'
         }
       ],
