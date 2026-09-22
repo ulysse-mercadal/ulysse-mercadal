@@ -7,6 +7,7 @@
 \definecolor{discordblack}{HTML}{0f0f0f}
 \usepackage{graphicx}
 \usepackage{lmodern} % Adds scalable fonts to support large sizes
+\usepackage[hidelinks]{hyperref}
 
 \newcommand{\chip}[1]{%
     \tikz[baseline]
@@ -15,6 +16,9 @@
 \newcommand{\blackchip}[1]{%
     \tikz[baseline]
     \node[anchor=base, draw=none, fill=discordblack, rounded rectangle, inner ysep=3pt, inner xsep=7pt, text height=1.6ex, text depth=0.4ex, text=white, font=\normalsize\sffamily\bfseries] {#1};%
+}
+\newcommand{\blackchiphref}[2]{%
+    \href{#1}{\tikz[baseline]\node[anchor=base, draw=none, fill=discordblack, rounded rectangle, inner ysep=3pt, inner xsep=7pt, text height=1.6ex, text depth=0.4ex, text=white, font=\normalsize\sffamily\bfseries] {#2};}%
 }
 
 % --- Lucide-style Icons using TikZ ---
@@ -121,7 +125,7 @@
         \color{white} \sffamily
         {\fontsize{38}{43}\selectfont \rmfamily \textbf{Ulysse \ \ \ \ \  Mercadal}}\\[0.4cm]
         \hrule width \hsize height 1pt \vspace{0.4cm}
-        {\large ulyssemercadal@kakao.com \hspace{1em} $\cdot$ \hspace{1em} +33 6 20 37 66 48}\\[0.4cm]
+        {\large \href{mailto:ulyssemercadal@kakao.com}{ulyssemercadal@kakao.com} \hspace{1em} $\cdot$ \hspace{1em} \href{tel:+33620376648}{+33 6 20 37 66 48}}\\[0.4cm]
         \hrule width \hsize height 1pt \vspace{0.4cm}
         {\Large \textbf{Développeur} \hspace{1em} -- \hspace{1em} \textbf{Étudiant en 3ème année à Epitech Lyon}}\\[0.25cm]
         {\large Recherche un stage de 4 à 5 mois à partir d'avril 2026.\\
@@ -199,17 +203,17 @@
         \hrule width \linewidth height 1pt \vspace{0.25cm}
 
         \blackchip{Stagiaire Développeur Full Stack} \hfill \textit{5 mois, 2025}\\[0.12cm]
-        \textit{Ezyperf} \hfill \textit{Full Remote, France / Japon}\\[0.1cm]
+        \href{https://ezyperf.com/}{\textit{Ezyperf}} \hfill \textit{Full Remote, France / Japon}\\[0.1cm]
         Développement des modules RH et du suivi des temps pour un ERP destiné aux PME et ETI en Go, TypeScript, React et Node.js en télétravail complet.
         \dottedSep
 
         \blackchip{Assistant Pédagogique Régional (AER)} \hfill \textit{6 mois, 2024--2025}\\[0.12cm]
-        \textit{Groupe IONIS} \hfill \textit{Lyon, France}\\[0.1cm]
+        \href{https://www.ionis-group.com/}{\textit{Groupe IONIS}} \hfill \textit{Lyon, France}\\[0.1cm]
         Accompagnement et mentorat des étudiants à Epitech Lyon. Enseignement des bonnes pratiques de code, revues techniques et évaluations de projets.
         \dottedSep
 
         \blackchip{Stagiaire Informatique (FabLab)} \hfill \textit{5 mois, 2024}\\[0.12cm]
-        \textit{BPCE-IT (Banque Populaire Caisse d'Epargne)} \hfill \textit{Paris, France}\\[0.1cm]
+        \href{https://www.bpce-it.fr/}{\textit{BPCE-IT (Banque Populaire Caisse d'Epargne)}} \hfill \textit{Paris, France}\\[0.1cm]
         Expérimentation de technologies émergentes pour le 2ème groupe bancaire français. Réalisation de POCs et MVPs (LLMs, RAG, OpenTelemetry, NoSQL).
 
         \vspace{0.35cm}
@@ -218,15 +222,15 @@
         {\Large \textbf{PROJETS}}\\[0.1cm]
         \hrule width \linewidth height 1pt \vspace{0.25cm}
 
-        \blackchip{Trippier} \hfill \textit{Go, Python, Next.js, Docker, Traefik}\\[0.12cm]
+        \blackchiphref{https://github.com/trippier-app}{TRIPPIER} \hfill \textit{Go, Python, Next.js, Docker, Traefik}\\[0.12cm]
         Écosystème public de voyage en microservices : moteur d'indexation POI en Go, générateur d'itinéraires en Python et interface web en Next.js derrière Traefik.
         \dottedSep
 
-        \blackchip{R-TYPE} \hfill \textit{C++, OpenGL, Protocole Réseau, Asio, ECS}\\[0.12cm]
+        \blackchiphref{https://github.com/nicolasnny/R-TYPE}{R-TYPE} \hfill \textit{C++, OpenGL, Protocole Réseau, Asio, ECS}\\[0.12cm]
         Shoot'em up spatial 3D multijoueur en réseau avec protocole UDP/TCP binaire sur-mesure, client graphique et moteur ECS complet.
         \dottedSep
 
-        \blackchip{AREA} \hfill \textit{React, NestJS, Flutter, PostgreSQL, OAuth}\\[0.12cm]
+        \blackchiphref{https://github.com/ulysse-mercadal/area}{AREA} \hfill \textit{React, NestJS, Flutter, PostgreSQL, OAuth}\\[0.12cm]
         Plateforme d'automatisation de flux web et mobile (Zapier/n8n) avec éditeur de graphe de nœuds et intégrations OAuth2 multi-services.
 
         \vspace{0.35cm}
