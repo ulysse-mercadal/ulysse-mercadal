@@ -1,0 +1,7 @@
+# Binaries
+*.exe
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
