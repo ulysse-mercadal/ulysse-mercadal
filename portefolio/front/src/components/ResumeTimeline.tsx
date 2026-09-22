@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Briefcase, GraduationCap, Github, Linkedin, Send, Clock } from "lucide-react";
+import { useLanguage } from '../context/LanguageContext';
 
 interface TimelineEntryProps {
   date: string;
@@ -165,6 +166,7 @@ const TimelineEntry = ({ date, title, subtitle, description, isLeft, icon: Icon,
 };
 
 export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | 'black' }) => {
+  const { language } = useLanguage();
   const sectionIsBlack = backgroundMode === 'white';
   const activeLineColor = sectionIsBlack ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
   const [isMobile, setIsMobile] = useState(false);
@@ -178,43 +180,81 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const timelineData = [
-    {
-      date: "5 Months",
-      title: "Full Stack Developer Intern",
-      subtitle: "BPCE-IT",
-      description: "Working within the IT services of the 2nd largest French banking group (Banque Populaire Caisse d'Epargne), I was part of the FabLab. My mission was to experiment with emerging technologies to identify and develop innovative use cases for the company.",
-      icon: Briefcase,
-      technologies: ["React", "Figma", "MongoDB", "Python", "FastAPI", "OpenTelemetry"]
-    },
-    {
-      date: "6 Months",
-      title: "Regional Educational Assistant (AER)",
-      subtitle: "Epitech Lyon",
-      description: "In charge of supporting and mentoring lower-year classes. Responsible for guiding students through their technical journey, evaluating projects, and ensuring pedagogical success.",
-      icon: GraduationCap,
-      technologies: ["Haskell", "C++", "C", "Java"]
-    },
-    {
-      date: "Full Remote",
-      title: "Full Stack Developer",
-      subtitle: "Ezyperf",
-      description: "Developed HR management modules and activity / time tracking features for an ERP solution in a full-remote environment.",
-      icon: Briefcase,
-      technologies: ["TypeScript", "React", "Node.js", "ERP"]
-    },
-    {
-      date: "future...",
-      title: "Your Company?",
-      subtitle: "Open to new opportunities",
-      description: "My next experience could be with you! I'm looking for challenging projects where I can apply my expertise in low-level programming, graphics, and full-stack development",
-      icon: Send,
-      links: [
-        { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
-        { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
+  const timelineData = language === 'fr'
+    ? [
+        {
+          date: "5 mois",
+          title: "Développeur Full Stack (Stagiaire)",
+          subtitle: "BPCE-IT",
+          description: "Au sein de la DSI du 2ème groupe bancaire français (BPCE), rattaché au FabLab. Mission d'expérimentation de technologies émergentes (LLM, RAG, OpenTelemetry, bases NoSQL) pour identifier et prototyper des cas d'usage innovants.",
+          icon: Briefcase,
+          technologies: ["React", "Figma", "MongoDB", "Python", "FastAPI", "OpenTelemetry"]
+        },
+        {
+          date: "6 mois",
+          title: "Assistant Pédagogique Régional (AER)",
+          subtitle: "Epitech Lyon",
+          description: "Accompagnement et mentorat technique des étudiants des promotions inférieures. Enseignement des bonnes pratiques de code, revues techniques, corrections de projets et suivi de la progression.",
+          icon: GraduationCap,
+          technologies: ["Haskell", "C++", "C", "Java"]
+        },
+        {
+          date: "Full Remote",
+          title: "Développeur Full Stack",
+          subtitle: "Ezyperf",
+          description: "Développement des modules de gestion des ressources humaines et des fonctionnalités de suivi des temps / activité pour un progiciel ERP en 100% télétravail.",
+          icon: Briefcase,
+          technologies: ["TypeScript", "React", "Node.js", "ERP"]
+        },
+        {
+          date: "futur...",
+          title: "Votre Entreprise ?",
+          subtitle: "Ouvert aux opportunités",
+          description: "Ma prochaine expérience pourrait être avec vous ! Je recherche des défis techniques où appliquer mon expertise en logique bas niveau, moteurs graphiques et architecture full-stack.",
+          icon: Send,
+          links: [
+            { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
+          ]
+        }
       ]
-    }
-  ];
+    : [
+        {
+          date: "5 Months",
+          title: "Full Stack Developer Intern",
+          subtitle: "BPCE-IT",
+          description: "Working within the IT services of the 2nd largest French banking group (Banque Populaire Caisse d'Epargne), I was part of the FabLab. My mission was to experiment with emerging technologies (LLM, RAG, OpenTelemetry) to identify and develop innovative MVPs.",
+          icon: Briefcase,
+          technologies: ["React", "Figma", "MongoDB", "Python", "FastAPI", "OpenTelemetry"]
+        },
+        {
+          date: "6 Months",
+          title: "Regional Educational Assistant (AER)",
+          subtitle: "Epitech Lyon",
+          description: "In charge of supporting and mentoring lower-year classes. Responsible for guiding students through their technical journey, conducting code reviews, evaluating projects, and ensuring pedagogical success.",
+          icon: GraduationCap,
+          technologies: ["Haskell", "C++", "C", "Java"]
+        },
+        {
+          date: "Full Remote",
+          title: "Full Stack Developer",
+          subtitle: "Ezyperf",
+          description: "Developed HR management modules and activity / time tracking features for an ERP solution in a full-remote environment.",
+          icon: Briefcase,
+          technologies: ["TypeScript", "React", "Node.js", "ERP"]
+        },
+        {
+          date: "future...",
+          title: "Your Company?",
+          subtitle: "Open to new opportunities",
+          description: "My next experience could be with you! I'm looking for challenging projects where I can apply my expertise in low-level programming, graphics, and full-stack development",
+          icon: Send,
+          links: [
+            { label: "GitHub", url: "https://github.com/ulysse-mercadal", icon: Github },
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/ulysse-mercadal-371a68297/", icon: Linkedin }
+          ]
+        }
+      ];
 
   return (
     <div style={{ width: '100%', maxWidth: '1200px', margin: 'clamp(4rem, 15vw, 150px) auto', padding: '0 20px', boxSizing: 'border-box' }}>

@@ -18,6 +18,8 @@ import { AnimatedText } from '../components/AnimatedText';
 import { ProjectCard } from '../components/ProjectCard';
 import { ResumeTimeline } from '../components/ResumeTimeline';
 import { Header } from '../components/Header';
+import { useLanguage } from '../context/LanguageContext';
+import { PROJECTS } from '../data/projects';
 
 const ANIMATIONS = [
   { name: 'Wireframe (Bezier Bubble)', animation: bezierBubble },
@@ -28,8 +30,7 @@ const ANIMATIONS = [
 const FONT_URL = "https://fonts.gstatic.com/s/nanummyeongjo/v6/9Bty3DZF0dXLMZlywRbVRNhxy2pLVGA5r_c.woff";
 
 export default function Page() {
-
-
+  const { language } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeAnimationIndex, setActiveAnimationIndex] = useState(0);
   const [isFontLoaded, setIsFontLoaded] = useState(false);
@@ -323,7 +324,7 @@ export default function Page() {
       }}>
         {/* <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} /> */}
         <Repetition3DText
-          text="About"
+          text={language === 'fr' ? 'À propos' : 'About'}
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
         <ResponsiveText style={{
           maxWidth: 'min(800px, 80vw)',
@@ -365,7 +366,9 @@ export default function Page() {
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="As a computer science student at Epitech Lyon, I thrive in a project-based learning environment that has fostered my adaptability and autonomy."
+              text={language === 'fr'
+                ? "Étudiant en informatique à Epitech Lyon, j'évolue dans un environnement d'apprentissage par projets qui a forgé mon autonomie et ma capacité d'adaptation."
+                : "As a computer science student at Epitech Lyon, I thrive in a project-based learning environment that has fostered my adaptability and autonomy."}
               style={{ position: 'relative', zIndex: 1 }}
               animationType="fade-sequence"
               delay={100}
@@ -399,7 +402,9 @@ export default function Page() {
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="My expertise spans graphical programming (OpenGL, Vulkan), low-level development (Zig, C), the modern Web ecosystem (NestJS, Next.js... and much more!), and mobile development (Flutter, React Native)."
+              text={language === 'fr'
+                ? "Mon expertise couvre la programmation graphique (OpenGL, Vulkan), le développement bas niveau (Zig, C), l'écosystème Web moderne (NestJS, Next.js... et bien plus !), et le mobile (Flutter, React Native)."
+                : "My expertise spans graphical programming (OpenGL, Vulkan), low-level development (Zig, C), the modern Web ecosystem (NestJS, Next.js... and much more!), and mobile development (Flutter, React Native)."}
               style={{ position: 'relative', zIndex: 1 }}
               animationType="pulse-animation"
               delay={300}
@@ -433,7 +438,9 @@ export default function Page() {
               pointerEvents: 'none'
             }} />
             <AnimatedText
-              text="I am particularly passionate about designing complex back-end and low level logic and constantly pushing my own boundaries."
+              text={language === 'fr'
+                ? "Je suis particulièrement passionné par la conception de logiques back-end complexes et d'architectures bas niveau, tout en repoussant constamment mes limites techniques."
+                : "I am particularly passionate about designing complex back-end and low level logic and constantly pushing my own boundaries."}
               style={{ position: 'relative', zIndex: 1 }}
               animationType="wave-effect"
               delay={500}
@@ -456,7 +463,7 @@ export default function Page() {
       }}>
         {/* <ZigZagDivider color={backgroundMode === 'white' ? '#ffffff' : '#000000'}/> */}
         <Repetition3DText
-          text="Projects"
+          text={language === 'fr' ? 'Projets' : 'Projects'}
           color={backgroundMode === 'white' ? '#000000' : '#ffffff'} />
 
         <div style={{
@@ -473,33 +480,24 @@ export default function Page() {
           marginBottom: "20rem"
 
         }}>
-          <ProjectCard
-            title="R-TYPE"
-            description="A networked 3D version of the famous R-Type space shooter, built with a custom engine and featuring a highly optimized, flexible TCP/UDP network protocol designed for any game type. The project is fully Windows and linux compatible thanks to a robust cross-compilation pipeline. (macos is not supported because of opengl)"
-            technologies={['C++', 'OpenGL', 'CMake', 'Asio']}
-            duration="6 weeks"
-            teamSize={4}
-            githubUrl="https://github.com/nicolasnny/R-TYPE"
-            backgroundMode={backgroundMode as 'white' | 'black'}
-          />
-          <ProjectCard
-            title="AREA"
-            description="A workflow automation tool for web and mobile featuring a custom-built workflow editor that handles complex node interactions. We re-implemented a system similar to n8n, including conditional nodes and seamless integration between 6+ online services via OAuth, all within a microservice architecture."
-            technologies={['Next.js', 'NestJS', 'PostgreSQL', 'Prisma', 'React', 'Flutter', 'Docker']}
-            duration="5 weeks"
-            teamSize={5}
-            githubUrl="https://github.com/ulysse-mercadal/area"
-            backgroundMode={backgroundMode as 'white' | 'black'}
-          />
-          <ProjectCard
-            title="Raytracer"
-            description="A high-performance Raytracer engine developed in C++ only four months after discovering the language. It features advanced optical effects like transparency, reflection, diffraction, and refraction, alongside drop shadows and numerous primitives, all implemented using modern C++ design patterns."
-            technologies={['C++']}
-            duration="4 weeks"
-            teamSize={3}
-            githubUrl="https://github.com/ulysse-mercadal/raytracer"
-            backgroundMode={backgroundMode as 'white' | 'black'}
-          />
+          {PROJECTS.map(project => {
+            const pt = project[language] || project.fr;
+            return (
+              <ProjectCard
+                key={project.slug}
+                title={project.title}
+                slug={project.slug}
+                badge={pt.badge}
+                description={pt.shortDescription}
+                technologies={project.technologies}
+                duration={pt.duration}
+                teamSize={project.teamSize}
+                githubUrl={project.githubUrl}
+                liveUrl={project.liveUrl}
+                backgroundMode={backgroundMode as 'white' | 'black'}
+              />
+            );
+          })}
         </div>
       </section>
       <section id="experiences" style={{
@@ -517,7 +515,7 @@ export default function Page() {
       }}>
         {/* <ZigZagDivider color={backgroundMode === 'white' ? '#000000' : '#ffffff'} /> */}
         <Repetition3DText
-          text="Experiences"
+          text={language === 'fr' ? 'Expériences' : 'Experiences'}
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'}
         />
         <div style={{ marginTop: '4rem', width: '100%' }}>

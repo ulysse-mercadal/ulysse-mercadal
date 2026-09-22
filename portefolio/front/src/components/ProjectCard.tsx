@@ -1,11 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Github, Users, Clock, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Github, Users, Clock, ExternalLink, ArrowRight } from 'lucide-react';
 import { ResponsiveText } from './ResponsiveText';
 
 interface ProjectCardProps {
   title: string;
+  slug?: string;
+  badge?: string;
   description: string;
   technologies: string[];
   githubUrl?: string;
@@ -17,6 +21,8 @@ interface ProjectCardProps {
 
 export const ProjectCard = ({
   title,
+  slug,
+  badge,
   description,
   technologies,
   githubUrl,
@@ -25,34 +31,63 @@ export const ProjectCard = ({
   teamSize,
   backgroundMode
 }: ProjectCardProps) => {
+  const router = useRouter();
   const isWhite = backgroundMode === 'white';
   const borderColor = isWhite ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
   const accentColor = isWhite ? '#000000' : '#ffffff';
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!slug) return;
+    const target = e.target as HTMLElement;
+    if (target.closest('a') || target.closest('button')) return;
+    router.push(`/project/${slug}`);
+  };
+
   return (
-    <div style={{
-      width: '100%',
-      maxWidth: '100%', // Added to prevent overflow
-      padding: 'clamp(1.5rem, 5vw, 3rem)',
-      border: `0.5px solid ${borderColor}`,
-      borderRadius: '2px',
-      backgroundColor: isWhite ? '#ffffff' : '#000000',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 'clamp(1rem, 3vw, 2rem)',
-      transition: 'all 0.3s ease',
-      position: 'relative',
-      overflow: 'hidden',
-      boxSizing: 'border-box'
-    }}>
+    <div
+      onClick={handleCardClick}
+      style={{
+        width: '100%',
+        maxWidth: '100%',
+        padding: 'clamp(1.5rem, 5vw, 3rem)',
+        border: `0.5px solid ${borderColor}`,
+        borderRadius: '2px',
+        backgroundColor: isWhite ? '#ffffff' : '#000000',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'clamp(1rem, 3vw, 2rem)',
+        transition: 'all 0.25s ease',
+        position: 'relative',
+        overflow: 'hidden',
+        boxSizing: 'border-box',
+        cursor: slug ? 'pointer' : 'default',
+      }}
+      className={slug ? 'project-card-hover' : ''}
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
-        <h3 style={{
-          fontSize: 'clamp(1.5rem, 4vw, 2.4rem)',
-          margin: 0,
-          fontWeight: '700',
-          letterSpacing: '-0.5px',
-          wordBreak: 'break-word'
-        }}>{title}</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <h3 style={{
+            fontSize: 'clamp(1.5rem, 4vw, 2.4rem)',
+            margin: 0,
+            fontWeight: '700',
+            letterSpacing: '-0.5px',
+            wordBreak: 'break-word'
+          }}>{title}</h3>
+          {badge && (
+            <span style={{
+              fontSize: 'clamp(0.65rem, 1.2vw, 0.75rem)',
+              fontWeight: '700',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              padding: '3px 9px',
+              border: `1px solid ${borderColor}`,
+              borderRadius: '999px',
+              opacity: 0.85
+            }}>
+              {badge}
+            </span>
+          )}
+        </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           {githubUrl && (
             <a href={githubUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>
@@ -105,6 +140,21 @@ export const ProjectCard = ({
           <Users size={16} />
           <span>{teamSize === 1 ? 'Solo' : `${teamSize} developers`}</span>
         </div>
+        {slug && (
+          <div style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontWeight: '700',
+            letterSpacing: '0.5px',
+            fontSize: 'clamp(0.75rem, 1.3vw, 0.85rem)',
+            opacity: 0.9,
+          }}>
+            <span>Détails</span>
+            <ArrowRight size={14} />
+          </div>
+        )}
       </div>
     </div>
   );
