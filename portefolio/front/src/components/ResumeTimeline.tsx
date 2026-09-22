@@ -196,6 +196,14 @@ export const ResumeTimeline = ({ backgroundMode }: { backgroundMode: 'white' | '
       technologies: ["Haskell", "C++", "C", "Java"]
     },
     {
+      date: "Full Remote",
+      title: "Full Stack Developer",
+      subtitle: "Ezyperf",
+      description: "Developed HR management modules and activity / time tracking features for an ERP solution in a full-remote environment.",
+      icon: Briefcase,
+      technologies: ["TypeScript", "React", "Node.js", "ERP"]
+    },
+    {
       date: "future...",
       title: "Your Company?",
       subtitle: "Open to new opportunities",
