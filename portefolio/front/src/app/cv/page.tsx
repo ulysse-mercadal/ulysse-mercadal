@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Download, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Download, ExternalLink, Globe } from 'lucide-react';
 import { Header } from '../../components/Header';
 import { useLanguage } from '../../context/LanguageContext';
 import { Repetition3DText } from '../../components/Repetition3DText';
 
 export default function CvPage() {
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const [backgroundMode, setBackgroundMode] = useState<'white' | 'black'>('black');
   const isWhite = backgroundMode === 'white';
 
@@ -16,6 +16,10 @@ export default function CvPage() {
   const textColor = isWhite ? '#000000' : '#ffffff';
   const borderColor = isWhite ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
   const cardBg = isWhite ? '#ffffff' : '#000000';
+
+  const isFr = language === 'fr';
+  const pdfUrl = isFr ? '/resume_fr.pdf' : '/resume_en.pdf';
+  const downloadFilename = isFr ? 'CV_Ulysse_Mercadal_FR.pdf' : 'Resume_Ulysse_Mercadal_EN.pdf';
 
   return (
     <div style={{
@@ -49,22 +53,66 @@ export default function CvPage() {
         }}>
           <div style={{ margin: '1rem 0 2rem 0' }}>
             <Repetition3DText
-              text={language === 'fr' ? 'Curriculum' : 'Resume'}
+              text={isFr ? 'Curriculum' : 'Resume'}
               color={textColor}
             />
           </div>
 
           <p style={{
             fontSize: '1rem',
-            opacity: 0.8,
-            maxWidth: '600px',
-            margin: '0 auto 2rem auto',
+            opacity: 0.85,
+            maxWidth: '620px',
+            margin: '0 auto 1.8rem auto',
             lineHeight: 1.6,
           }}>
-            {language === 'fr'
-              ? 'Consultez mon curriculum vitae directement en ligne ou téléchargez-le au format PDF généré depuis les sources LaTeX.'
-              : 'View my curriculum vitae directly online or download it as a PDF generated from LaTeX sources.'}
+            {isFr
+              ? 'Consultez mon curriculum vitae ci-dessous ou téléchargez-le au format PDF. Le document s\'adapte automatiquement à la langue sélectionnée.'
+              : 'View my curriculum vitae below or download it as a PDF. The document automatically matches your selected language.'}
           </p>
+
+          {/* Language indicator & quick switch */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '0.8rem',
+            marginBottom: '1.8rem',
+          }}>
+            <button
+              onClick={() => { if (!isFr) toggleLanguage(); }}
+              style={{
+                background: isFr ? (isWhite ? '#000000' : '#ffffff') : 'transparent',
+                color: isFr ? (isWhite ? '#ffffff' : '#000000') : textColor,
+                border: `0.5px solid ${borderColor}`,
+                padding: '6px 14px',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                letterSpacing: '0.5px',
+                opacity: isFr ? 1 : 0.6,
+              }}
+            >
+              Français (FR)
+            </button>
+            <button
+              onClick={() => { if (isFr) toggleLanguage(); }}
+              style={{
+                background: !isFr ? (isWhite ? '#000000' : '#ffffff') : 'transparent',
+                color: !isFr ? (isWhite ? '#ffffff' : '#000000') : textColor,
+                border: `0.5px solid ${borderColor}`,
+                padding: '6px 14px',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                letterSpacing: '0.5px',
+                opacity: !isFr ? 1 : 0.6,
+              }}
+            >
+              English (EN)
+            </button>
+          </div>
 
           {/* Action Buttons */}
           <div style={{
@@ -75,8 +123,8 @@ export default function CvPage() {
             flexWrap: 'wrap',
           }}>
             <a
-              href="/resume.pdf"
-              download="CV_Ulysse_Mercadal.pdf"
+              href={pdfUrl}
+              download={downloadFilename}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -93,11 +141,11 @@ export default function CvPage() {
               }}
             >
               <Download size={15} />
-              <span>{language === 'fr' ? 'Télécharger le PDF' : 'Download PDF'}</span>
+              <span>{isFr ? 'Télécharger le PDF (FR)' : 'Download PDF (EN)'}</span>
             </a>
 
             <a
-              href="/resume.pdf"
+              href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -117,7 +165,7 @@ export default function CvPage() {
               }}
             >
               <ExternalLink size={15} />
-              <span>{language === 'fr' ? 'Plein Écran' : 'Full Screen'}</span>
+              <span>{isFr ? 'Plein Écran' : 'Full Screen'}</span>
             </a>
           </div>
         </section>
@@ -131,8 +179,9 @@ export default function CvPage() {
           backgroundColor: cardBg,
         }}>
           <iframe
-            src="/resume.pdf#view=FitH"
-            title="CV Ulysse Mercadal"
+            key={pdfUrl}
+            src={`${pdfUrl}#view=FitH`}
+            title={isFr ? 'CV Ulysse Mercadal (Français)' : 'Resume Ulysse Mercadal (English)'}
             style={{
               width: '100%',
               height: '80vh',
