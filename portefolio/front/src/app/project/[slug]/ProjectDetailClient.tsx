@@ -23,11 +23,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
   const [backgroundMode, setBackgroundMode] = useState<'white' | 'black'>('black');
   const isWhite = backgroundMode === 'white';
 
-  // Strictly monochrome: only white, black and neutral grayscale borders
+  // Strictly monochrome: matching home page palette & borders
   const bgColor = isWhite ? '#ffffff' : '#000000';
   const textColor = isWhite ? '#000000' : '#ffffff';
-  const borderColor = isWhite ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.25)';
-  const cardBg = isWhite ? '#fafafa' : '#0a0a0a';
+  const borderColor = isWhite ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
+  const cardBg = isWhite ? '#ffffff' : '#000000';
   const pillBg = isWhite ? '#000000' : '#ffffff';
   const pillText = isWhite ? '#ffffff' : '#000000';
 
@@ -47,20 +47,22 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
       transition: 'background-color 0.25s ease, color 0.25s ease',
       boxSizing: 'border-box',
     }}>
-      {/* Top Header */}
+      {/* Top Header - Exact height, border & padding as Header.tsx */}
       <header style={{
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
-        zIndex: 100,
+        left: 0,
+        right: 0,
+        height: '60px',
+        zIndex: 1000,
         backdropFilter: 'blur(12px)',
-        backgroundColor: isWhite ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)',
-        borderBottom: `1px solid ${borderColor}`,
-        padding: '0.8rem clamp(1rem, 4vw, 2.5rem)',
+        backgroundColor: isWhite ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
+        borderBottom: `0.5px solid ${borderColor}`,
+        padding: '0 clamp(16px, 4vw, 40px)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '0.6rem',
+        boxSizing: 'border-box',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <Link
@@ -93,15 +95,15 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 gap: '0.4rem',
                 color: 'inherit',
                 textDecoration: 'none',
-                padding: '6px 12px',
-                border: `1px solid ${borderColor}`,
+                padding: '5px 10px',
+                border: `0.5px solid ${borderColor}`,
                 borderRadius: '2px',
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
               }}
             >
-              <Github size={15} />
+              <Github size={14} />
               <span>GitHub</span>
             </a>
           )}
@@ -118,16 +120,16 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 gap: '0.4rem',
                 color: 'inherit',
                 textDecoration: 'none',
-                padding: '6px 12px',
-                border: `1px solid ${borderColor}`,
+                padding: '5px 10px',
+                border: `0.5px solid ${borderColor}`,
                 borderRadius: '2px',
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
               }}
             >
               <span>{link.label}</span>
-              <ExternalLink size={13} />
+              <ExternalLink size={12} />
             </a>
           ))}
 
@@ -136,11 +138,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             onClick={toggleLanguage}
             style={{
               background: 'transparent',
-              border: `1px solid ${borderColor}`,
+              border: `0.5px solid ${borderColor}`,
               borderRadius: '2px',
               color: 'inherit',
               cursor: 'pointer',
-              padding: '6px 10px',
+              padding: '5px 9px',
               fontSize: '0.8rem',
               fontWeight: 700,
               letterSpacing: '1px',
@@ -160,11 +162,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             onClick={toggleTheme}
             style={{
               background: 'transparent',
-              border: `1px solid ${borderColor}`,
+              border: `0.5px solid ${borderColor}`,
               color: 'inherit',
               borderRadius: '2px',
-              width: '34px',
-              height: '34px',
+              width: '32px',
+              height: '32px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -172,24 +174,25 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             }}
             title={language === 'fr' ? 'Changer de thème' : 'Toggle theme'}
           >
-            {isWhite ? <Moon size={16} /> : <Sun size={16} />}
+            {isWhite ? <Moon size={15} /> : <Sun size={15} />}
           </button>
         </div>
       </header>
 
-      {/* Main Container */}
+      {/* Main Container - Exact margins and max-width as Home Page */}
       <main style={{
-        maxWidth: '900px',
+        width: '100%',
+        maxWidth: '800px',
         margin: '0 auto',
-        padding: 'clamp(3rem, 7vw, 5rem) clamp(1rem, 4vw, 2rem) 8rem clamp(1rem, 4vw, 2rem)',
+        padding: '100px 20px 12rem 20px',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'clamp(2.5rem, 5vw, 3.5rem)',
+        gap: '3rem',
       }}>
         {/* Project Header Hero */}
         <section style={{
-          borderBottom: `1px solid ${borderColor}`,
+          borderBottom: `0.5px solid ${borderColor}`,
           paddingBottom: '3rem',
           textAlign: 'center',
         }}>
@@ -209,7 +212,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 textTransform: 'uppercase',
                 letterSpacing: '1.5px',
                 padding: '3px 10px',
-                border: `1px solid ${borderColor}`,
+                border: `0.5px solid ${borderColor}`,
                 borderRadius: '999px',
                 backgroundColor: pillBg,
                 color: pillText,
@@ -232,10 +235,9 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
 
           {/* Description */}
           <p style={{
-            fontSize: 'clamp(1.05rem, 2.2vw, 1.25rem)',
+            fontSize: 'clamp(1rem, 2vw, 1.15rem)',
             lineHeight: 1.7,
             opacity: 0.85,
-            maxWidth: '780px',
             margin: '0 auto',
             textAlign: 'justify',
           }}>
@@ -251,7 +253,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             alignItems: 'center',
             marginTop: '2.5rem',
             paddingTop: '1.5rem',
-            borderTop: `1px dashed ${borderColor}`,
+            borderTop: `0.5px dashed ${borderColor}`,
             fontSize: '0.88rem',
             letterSpacing: '0.5px',
             opacity: 0.9,
@@ -327,7 +329,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 <div
                   key={idx}
                   style={{
-                    border: `1px solid ${borderColor}`,
+                    border: `0.5px solid ${borderColor}`,
                     borderRadius: '2px',
                     padding: '1.4rem',
                     backgroundColor: cardBg,
@@ -358,8 +360,8 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         {/* Features List */}
         {t.features && t.features.length > 0 && (
           <section style={{
-            border: `1px solid ${borderColor}`,
-            padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+            border: `0.5px solid ${borderColor}`,
+            padding: 'clamp(1.5rem, 5vw, 3rem)',
             borderRadius: '2px',
             backgroundColor: cardBg,
           }}>
@@ -404,7 +406,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         {/* Technologies / Stack (Monochrome) */}
         <section style={{
           paddingTop: '1.5rem',
-          borderTop: `1px solid ${borderColor}`,
+          borderTop: `0.5px solid ${borderColor}`,
         }}>
           <h3 style={{
             fontSize: '0.85rem',
@@ -421,11 +423,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
               <span
                 key={tech}
                 style={{
-                  padding: '5px 13px',
+                  padding: '4px 12px',
                   fontSize: '0.82rem',
                   fontWeight: 600,
                   borderRadius: '100px',
-                  border: `1px solid ${borderColor}`,
+                  border: `0.5px solid ${borderColor}`,
                   backgroundColor: pillBg,
                   color: pillText,
                 }}
@@ -440,7 +442,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         <section style={{
           marginTop: '1.5rem',
           paddingTop: '2.5rem',
-          borderTop: `1px solid ${borderColor}`,
+          borderTop: `0.5px solid ${borderColor}`,
         }}>
           <h3 style={{
             fontSize: '0.95rem',
@@ -469,7 +471,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                     flexDirection: 'column',
                     gap: '0.5rem',
                     padding: '1.2rem',
-                    border: `1px solid ${borderColor}`,
+                    border: `0.5px solid ${borderColor}`,
                     borderRadius: '2px',
                     textDecoration: 'none',
                     color: 'inherit',
@@ -506,7 +508,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
               textTransform: 'uppercase',
               letterSpacing: '1px',
               padding: '12px 24px',
-              border: `1px solid ${borderColor}`,
+              border: `0.5px solid ${borderColor}`,
               borderRadius: '2px',
             }}
           >
