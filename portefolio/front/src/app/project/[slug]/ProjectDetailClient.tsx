@@ -2,24 +2,18 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  Github,
-  ExternalLink,
-  Sun,
-  Moon,
-  ArrowRight
-} from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 import { Project, PROJECTS } from '../../../data/projects';
 import { useLanguage } from '../../../context/LanguageContext';
 import { Repetition3DText } from '../../../components/Repetition3DText';
+import { Header } from '../../../components/Header';
 
 interface ProjectDetailClientProps {
   project: Project;
 }
 
 export default function ProjectDetailClient({ project }: ProjectDetailClientProps) {
-  const { language, toggleLanguage } = useLanguage();
+  const { language } = useLanguage();
   const [backgroundMode, setBackgroundMode] = useState<'white' | 'black'>('black');
   const isWhite = backgroundMode === 'white';
 
@@ -30,10 +24,6 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
   const cardBg = isWhite ? '#ffffff' : '#000000';
   const pillBg = isWhite ? '#000000' : '#ffffff';
   const pillText = isWhite ? '#ffffff' : '#000000';
-
-  const toggleTheme = () => {
-    setBackgroundMode(prev => (prev === 'white' ? 'black' : 'white'));
-  };
 
   const t = project[language] || project.fr;
   const otherProjects = PROJECTS.filter(p => p.slug !== project.slug);
@@ -47,144 +37,18 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
       transition: 'background-color 0.25s ease, color 0.25s ease',
       boxSizing: 'border-box',
     }}>
-      {/* Top Header - Exact height, border & padding as Header.tsx */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '60px',
-        zIndex: 1000,
-        backdropFilter: 'blur(12px)',
-        backgroundColor: isWhite ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.95)',
-        borderBottom: `0.5px solid ${borderColor}`,
-        padding: '0 clamp(16px, 4vw, 40px)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        boxSizing: 'border-box',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link
-            href="/#projects"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              fontSize: 'clamp(0.85rem, 1.4vw, 0.95rem)',
-              fontWeight: 600,
-              letterSpacing: '0.5px',
-            }}
-          >
-            <ArrowLeft size={16} />
-            <span>{language === 'fr' ? 'Accueil' : 'Home'}</span>
-          </Link>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                padding: '5px 10px',
-                border: `0.5px solid ${borderColor}`,
-                borderRadius: '2px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                letterSpacing: '0.5px',
-              }}
-            >
-              <Github size={14} />
-              <span>GitHub</span>
-            </a>
-          )}
-
-          {project.links && project.links.map(link => (
-            <a
-              key={link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                padding: '5px 10px',
-                border: `0.5px solid ${borderColor}`,
-                borderRadius: '2px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                letterSpacing: '0.5px',
-              }}
-            >
-              <span>{link.label}</span>
-              <ExternalLink size={12} />
-            </a>
-          ))}
-
-          {/* Language Switcher Button */}
-          <button
-            onClick={toggleLanguage}
-            style={{
-              background: 'transparent',
-              border: `0.5px solid ${borderColor}`,
-              borderRadius: '2px',
-              color: 'inherit',
-              cursor: 'pointer',
-              padding: '5px 9px',
-              fontSize: '0.8rem',
-              fontWeight: 700,
-              letterSpacing: '1px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '4px',
-            }}
-            title={language === 'fr' ? 'Passer en anglais' : 'Switch to French'}
-          >
-            <span style={{ opacity: language === 'fr' ? 1 : 0.35 }}>FR</span>
-            <span style={{ opacity: 0.3 }}>/</span>
-            <span style={{ opacity: language === 'en' ? 1 : 0.35 }}>EN</span>
-          </button>
-
-          {/* Theme Switcher Button */}
-          <button
-            onClick={toggleTheme}
-            style={{
-              background: 'transparent',
-              border: `0.5px solid ${borderColor}`,
-              color: 'inherit',
-              borderRadius: '2px',
-              width: '32px',
-              height: '32px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            title={language === 'fr' ? 'Changer de thème' : 'Toggle theme'}
-          >
-            {isWhite ? <Moon size={15} /> : <Sun size={15} />}
-          </button>
-        </div>
-      </header>
+      {/* Exact same Header as on the home page */}
+      <Header
+        backgroundMode={backgroundMode}
+        setBackgroundMode={setBackgroundMode as React.Dispatch<React.SetStateAction<string>>}
+      />
 
       {/* Main Container - Exact margins and max-width as Home Page */}
       <main style={{
         width: '100%',
         maxWidth: '800px',
         margin: '0 auto',
-        padding: '100px 20px 12rem 20px',
+        padding: '100px 20px 8rem 20px',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
@@ -244,7 +108,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             {t.fullDescription}
           </p>
 
-          {/* Meta Information Bar */}
+          {/* Meta Information Bar with all Project Links */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -492,30 +356,6 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             })}
           </div>
         </section>
-
-        {/* Back Link */}
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <Link
-            href="/#projects"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              fontSize: '0.85rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              padding: '12px 24px',
-              border: `0.5px solid ${borderColor}`,
-              borderRadius: '2px',
-            }}
-          >
-            <ArrowLeft size={15} />
-            <span>{language === 'fr' ? "Retour à l'accueil" : 'Back to Home'}</span>
-          </Link>
-        </div>
       </main>
     </div>
   );

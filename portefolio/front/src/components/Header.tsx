@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -27,14 +28,14 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
 
   const navItems = language === 'fr'
     ? [
-        { label: 'À propos', href: '#about' },
-        { label: 'Projets', href: '#projects' },
-        { label: 'Expériences', href: '#experiences' },
+        { label: 'À propos', href: '/#about' },
+        { label: 'Projets', href: '/#projects' },
+        { label: 'Expériences', href: '/#experiences' },
       ]
     : [
-        { label: 'About', href: '#about' },
-        { label: 'Projects', href: '#projects' },
-        { label: 'Experiences', href: '#experiences' },
+        { label: 'About', href: '/#about' },
+        { label: 'Projects', href: '/#projects' },
+        { label: 'Experiences', href: '/#experiences' },
       ];
 
   const headerStyle: React.CSSProperties = {
@@ -97,7 +98,7 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
 
         <nav style={navStyle}>
           {navItems.map(item => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               style={{
@@ -110,7 +111,7 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -167,7 +168,7 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
       {isMobile && (
         <div style={mobileMenuStyle}>
           {navItems.map(item => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               onClick={() => setIsMenuOpen(false)}
@@ -181,7 +182,7 @@ export const Header = ({ backgroundMode, setBackgroundMode }: HeaderProps) => {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}
