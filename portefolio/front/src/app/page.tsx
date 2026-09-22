@@ -317,7 +317,7 @@ export default function Page() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '100px 20px 10rem 20px', // Added 10rem bottom padding
+        padding: '100px max(24px, 5vw) 10rem max(24px, 5vw)',
         margin: 0,
         boxSizing: 'border-box',
       }}>
@@ -326,7 +326,7 @@ export default function Page() {
           text="About"
           color={backgroundMode === 'white' ? '#ffffff' : '#000000'} />
         <ResponsiveText style={{
-          maxWidth: 'min(800px, 90vw)',
+          maxWidth: 'min(800px, 80vw)',
           textAlign: 'justify',
           marginTop: '4rem',
           position: 'relative',
@@ -337,7 +337,7 @@ export default function Page() {
           marginRight: 'auto',
           marginBottom: "20rem"
         }}>
-          <div style={{ position: 'relative', width: '100%', padding: '0', marginBottom: '40px' }}>
+          <div style={{ position: 'relative', width: '100%', padding: '8px 14px', marginBottom: '40px', boxSizing: 'border-box' }}>
             <div style={{
               position: 'absolute',
               top: 0,
@@ -353,7 +353,6 @@ export default function Page() {
             }} />
             <div style={{
               position: 'absolute',
-              marginLeft: -5,
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
@@ -372,7 +371,7 @@ export default function Page() {
               delay={100}
             />
           </div>
-          <div style={{ position: 'relative', width: '100%', padding: '0', marginBottom: '40px' }}>
+          <div style={{ position: 'relative', width: '100%', padding: '8px 14px', marginBottom: '40px', boxSizing: 'border-box' }}>
             <div style={{
               position: 'absolute',
               top: 0,
@@ -391,7 +390,6 @@ export default function Page() {
               top: '-10vh',
               bottom: '-10vh',
               left: 0,
-              marginLeft: -5,
               right: 0,
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'} `,
@@ -407,7 +405,7 @@ export default function Page() {
               delay={300}
             />
           </div>
-          <div style={{ position: 'relative', width: '100%', padding: '0' }}>
+          <div style={{ position: 'relative', width: '100%', padding: '8px 14px', boxSizing: 'border-box' }}>
             <div style={{
               position: 'absolute',
               top: 0,
@@ -427,7 +425,6 @@ export default function Page() {
               bottom: '-10vh',
               left: 0,
               right: 0,
-              marginLeft: -5,
               borderLeft: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               borderRight: `0.5px solid ${backgroundMode === 'white' ? '#ffffff' : '#000000'}`,
               maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)',
