@@ -58,18 +58,6 @@ export default function CvPage() {
             />
           </div>
 
-          <p style={{
-            fontSize: '1rem',
-            opacity: 0.85,
-            maxWidth: '620px',
-            margin: '0 auto 1.8rem auto',
-            lineHeight: 1.6,
-          }}>
-            {isFr
-              ? 'Consultez mon curriculum vitae ci-dessous ou téléchargez-le au format PDF. Le document s\'adapte automatiquement à la langue sélectionnée.'
-              : 'View my curriculum vitae below or download it as a PDF. The document automatically matches your selected language.'}
-          </p>
-
           {/* Language indicator & quick switch */}
           <div style={{
             display: 'flex',
